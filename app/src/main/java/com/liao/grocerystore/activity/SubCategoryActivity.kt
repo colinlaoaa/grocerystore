@@ -42,6 +42,7 @@ class SubCategoryActivity : AppCompatActivity() {
                 var gson = GsonBuilder().create()
                 var newResponse = gson.fromJson(it, CategoryContent::class.java)
 
+
                 var adapterMyFragment = AdapterMyFragment(supportFragmentManager)
                 adapterMyFragment.addFragment(newResponse.data)
 

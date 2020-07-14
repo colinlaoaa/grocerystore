@@ -7,7 +7,7 @@ class Endpoints {
 
         private const val URL_CATEGORY = "category"
         private const val URL_SUB_CATEGORY = "subcategory"
-        private const val URL_PRODUCTS = "products"
+        private const val URL_PRODUCTS = "products/sub"
 
         fun getCategory(): String{
             return Config.BASE_URL+ URL_CATEGORY

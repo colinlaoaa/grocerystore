@@ -6,9 +6,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.android.volley.Request
+import com.android.volley.Response
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
+import com.google.gson.GsonBuilder
 import com.liao.grocerystore.R
+import com.liao.grocerystore.adapters.AdapterMyFragment
 import com.liao.grocerystore.adapters.AdapterRecyclerFragment
+import com.liao.grocerystore.app.Endpoints
+import com.liao.grocerystore.model.CategoryContent
 import com.liao.grocerystore.model.Data
+import com.liao.grocerystore.model.ProductContent
+import com.liao.grocerystore.model.ProductData
+import kotlinx.android.synthetic.main.activity_sub_category.*
 import kotlinx.android.synthetic.main.fragment_category.view.*
 
 // TODO: Rename parameter arguments, choose names that match
@@ -25,17 +36,18 @@ private const val ARG_PARAM1 = "param1"
 class CategoryFragment : Fragment() {
 
 
-
-    var mList: ArrayList<Data> = ArrayList()
+    var mList: ArrayList<ProductData> = ArrayList()
 
     // TODO: Rename and change types of parameters
     private var param1: String? = null
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
+
 
         }
     }
@@ -54,15 +66,44 @@ class CategoryFragment : Fragment() {
 
     private fun init(view: View) {
 
+        getdata(param1!!.toInt(),view)
 
-        view.recycler_view_2.layoutManager = LinearLayoutManager(context)
-        var adapterRecyclerFragment = AdapterRecyclerFragment(activity!!, mList)
-        view.recycler_view_2.adapter = adapterRecyclerFragment
 
 
 
 
     }
+
+    private fun getdata(subId: Int,view: View) {
+
+        var requestQueue = Volley.newRequestQueue(context)
+        var request = StringRequest(
+            Request.Method.GET,
+            Endpoints.getProductsBySubId(subId),
+            Response.Listener {
+
+                var gson = GsonBuilder().create()
+                var newResponse = gson.fromJson(it, ProductContent::class.java)
+                mList= newResponse.data
+
+                view.recycler_view_2.layoutManager = LinearLayoutManager(context)
+                var adapterRecyclerFragment = AdapterRecyclerFragment(activity!!, mList)
+                adapterRecyclerFragment.setdata(mList)
+                view.recycler_view_2.adapter = adapterRecyclerFragment
+
+
+
+
+            },
+            Response.ErrorListener {
+
+            })
+
+        requestQueue.add(request)
+
+
+    }
+
 
     companion object {
         /**
@@ -79,6 +120,7 @@ class CategoryFragment : Fragment() {
             CategoryFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
+
 
                 }
             }
