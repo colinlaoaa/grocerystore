@@ -50,16 +50,8 @@ class AdapterRecycler(var mContext: Context, var mList: List<Category>) :
                 .into(itemView.image_view_2)
 
             itemView.image_view_2.setOnClickListener{
-                var count = mList.size
                 var myIntent = Intent(mContext, SubCategoryActivity::class.java)
-                myIntent.putExtra("COUNT",count)
-                var newList = arrayListOf<String>()
-                for(i in 0 .. count-1){
-
-                        newList.add(mList[i].catName)
-                }
-                myIntent.putExtra("CATNAME",newList)
-
+                myIntent.putExtra(Category.CATID,category.catId)
                 mContext.startActivity(myIntent)
             }
 

@@ -4,6 +4,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.liao.grocerystore.fragment.CategoryFragment
+import com.liao.grocerystore.model.Data
 
 class AdapterMyFragment(fm: FragmentManager) : FragmentPagerAdapter(fm) {
     var mFragmentList: ArrayList<Fragment> = ArrayList()
@@ -17,11 +18,11 @@ class AdapterMyFragment(fm: FragmentManager) : FragmentPagerAdapter(fm) {
         return mTitleList.size
     }
 
-    fun addFragment(list: ArrayList<String>?) {
+    fun addFragment(list: ArrayList<Data>?) {
         if (list != null) {
-            for (catname in list) {
-                mFragmentList.add(CategoryFragment.newInstance(catname))
-                mTitleList.add(catname)
+            for (data in list) {
+                mFragmentList.add(CategoryFragment.newInstance(data.subId.toString()))
+                mTitleList.add(data.subName)
             }
         }
     }

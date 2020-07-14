@@ -18,4 +18,8 @@ data class Category(
     val position: Int,
     val slug: String,
     val status: Boolean
-):Serializable
+):Serializable{
+    companion object {
+        const val CATID = "catId"
+    }
+}
