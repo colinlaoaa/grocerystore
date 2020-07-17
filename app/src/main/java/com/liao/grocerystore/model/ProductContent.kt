@@ -1,6 +1,5 @@
 package com.liao.grocerystore.model
 
-import com.liao.grocerystore.activity.ProductDetailActivity
 import java.io.Serializable
 
 data class ProductContent(
@@ -16,9 +15,9 @@ data class ProductData(
     val created: String,
     val description: String,
     val image: String,
-    val mrp: Int,
+    val mrp: Double,
     val position: Int,
-    val price: Int,
+    val price: Double,
     val productName: String,
     val quantity: Int,
     val status: Boolean,

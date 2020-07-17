@@ -2,19 +2,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="10dp"
-    android:weightSum="10">
+    android:weightSum="20">
+
+    <include layout="@layout/app_bar" />
+
 
     <ImageView
         android:id="@+id/image_view_3"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="4" />
+        android:layout_height="150dp"
+        android:layout_weight="6" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
+        android:layout_weight="1"
         android:orientation="horizontal"
         android:weightSum="2">
 
@@ -24,7 +26,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:gravity="center" />
 
         <TextView
             android:id="@+id/text_view_2"
@@ -32,7 +35,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:gravity="center" />
     </LinearLayout>
 
     <TextView
@@ -41,22 +45,47 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:layout_weight="1"
         android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/text_view_4"
-        style="@style/text_view_style"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:textSize="30dp" />
+        android:layout_height="0dp"
+        android:layout_weight="11">
 
-    <TextView
-        android:id="@+id/text_view_5"
-        style="@style/text_view_style"
+        <TextView
+            android:id="@+id/text_view_4"
+            style="@style/text_view_style"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="20dp" />
+    </ScrollView>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp" />
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:background="@drawable/long_round_button"
+            android:text="BUY"
+            android:textColor="#fff"
+            android:textSize="25dp" />
+
+        <Button
+            android:id="@+id/button_add_cart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/long_round_button"
+            android:text="ADD cart"
+            android:layout_marginLeft="25dp"
+            android:textColor="#fff"
+            android:textSize="25dp" />
+    </LinearLayout>
 
 
 </LinearLayout>

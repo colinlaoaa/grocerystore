@@ -1,10 +1,10 @@
 package com.liao.grocerystore.fragment
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.volley.Request
 import com.android.volley.Response
@@ -12,14 +12,10 @@ import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.google.gson.GsonBuilder
 import com.liao.grocerystore.R
-import com.liao.grocerystore.adapters.AdapterMyFragment
 import com.liao.grocerystore.adapters.AdapterRecyclerFragment
 import com.liao.grocerystore.app.Endpoints
-import com.liao.grocerystore.model.CategoryContent
-import com.liao.grocerystore.model.Data
 import com.liao.grocerystore.model.ProductContent
 import com.liao.grocerystore.model.ProductData
-import kotlinx.android.synthetic.main.activity_sub_category.*
 import kotlinx.android.synthetic.main.fragment_category.view.*
 
 // TODO: Rename parameter arguments, choose names that match
@@ -66,7 +62,7 @@ class CategoryFragment : Fragment() {
 
     private fun init(view: View) {
 
-        getdata(param1!!.toInt(),view)
+        getdata(param1!!.toString().toUInt().toInt(),view)
 
 
 

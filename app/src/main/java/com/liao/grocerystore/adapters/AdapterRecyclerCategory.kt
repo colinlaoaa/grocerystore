@@ -2,7 +2,6 @@ package com.liao.grocerystore.adapters
 
 import android.content.Context
 import android.content.Intent
-
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,14 +10,12 @@ import com.liao.grocerystore.R
 import com.liao.grocerystore.activity.SubCategoryActivity
 import com.liao.grocerystore.app.Config
 import com.liao.grocerystore.model.Category
-import com.liao.grocerystore.model.CategoryResponse
-import com.liao.grocerystore.model.Data
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.new_row.view.*
 
 
-class AdapterRecycler(var mContext: Context, var mList: List<Category>) :
-    RecyclerView.Adapter<AdapterRecycler.MyViewHolder>() {
+class AdapterRecyclerCategory(var mContext: Context, var mList: List<Category>) :
+    RecyclerView.Adapter<AdapterRecyclerCategory.MyViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -49,7 +46,7 @@ class AdapterRecycler(var mContext: Context, var mList: List<Category>) :
                 .error(R.drawable.noimage)
                 .into(itemView.image_view_2)
 
-            itemView.image_view_2.setOnClickListener{
+            itemView.view_1.setOnClickListener{
                 var myIntent = Intent(mContext, SubCategoryActivity::class.java)
                 myIntent.putExtra(Category.CATID,category.catId)
                 mContext.startActivity(myIntent)

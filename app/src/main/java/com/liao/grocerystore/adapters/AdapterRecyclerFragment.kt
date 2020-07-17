@@ -11,18 +11,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.liao.grocerystore.R
 import com.liao.grocerystore.activity.ProductDetailActivity
 import com.liao.grocerystore.app.Config
-import com.liao.grocerystore.model.Data
-import com.liao.grocerystore.model.ProductContent
+import com.liao.grocerystore.helper.DBHelper
+import com.liao.grocerystore.model.CartContent
 import com.liao.grocerystore.model.ProductData
-
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.new_row.view.*
 import kotlinx.android.synthetic.main.new_row.view.text_view_1
 import kotlinx.android.synthetic.main.new_row_fragment.view.*
 
 class AdapterRecyclerFragment(var mContext: Context, var mList: ArrayList<ProductData>) :
     RecyclerView.Adapter<AdapterRecyclerFragment.MyViewHolder>() {
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         var view = LayoutInflater.from(mContext).inflate(R.layout.new_row_fragment, parent, false)
@@ -47,17 +44,21 @@ class AdapterRecyclerFragment(var mContext: Context, var mList: ArrayList<Produc
 
 
     inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
+        var dbHelper = DBHelper(mContext)
+
         fun bind(productData: ProductData) {
+            itemView.progress_bar.visibility = View.GONE
             itemView.text_view_1.text = productData.productName
             itemView.text_view_2.text = "unit"+productData.unit
             itemView.text_view_3.text = productData.mrp.toString()
             itemView.text_view_4.text = productData.price.toString()
-            itemView.text_view_4.paint.flags = Paint.STRIKE_THRU_TEXT_FLAG
+            itemView.text_view_3.paint.flags = Paint.STRIKE_THRU_TEXT_FLAG
             Picasso.get().load(Config.IMAGE_BASE_URL + productData.image).placeholder(R.drawable.noimage)
                 .error(R.drawable.noimage)
                 .into(itemView.image_view_1)
 
-            itemView.image_view_1.setOnClickListener {
+            itemView.view_2.setOnClickListener {
                 var myIntent = Intent(mContext, ProductDetailActivity::class.java)
                 myIntent.putExtra(ProductData.PRODUCT_DETAIL,productData)
                 mContext.startActivity(myIntent)
@@ -76,6 +77,16 @@ class AdapterRecyclerFragment(var mContext: Context, var mList: ArrayList<Produc
                 itemView.button_3.visibility = View.VISIBLE
                 itemView.text_view_5.text = "1"
                 itemView.text_view_5.visibility = View.VISIBLE
+
+                var cartContent = CartContent(productData._id,
+                        productData.productName,
+                        productData.price,
+                        productData.mrp,
+                        productData.image,
+                        productData.quantity)
+                dbHelper.addCartContent(cartContent)
+
+
             }
 
             itemView.button_2.setOnClickListener {
@@ -87,17 +98,17 @@ class AdapterRecyclerFragment(var mContext: Context, var mList: ArrayList<Produc
                     itemView.button_1.visibility = View.VISIBLE
                 } else {
                     itemView.text_view_5.text =
-                        "${itemView.text_view_5.text.toString().toInt() - 1}"
+                        "${itemView.text_view_5.text.toString() .toUInt() - 1u}"
                 }
             }
 
             itemView.button_3.setOnClickListener {
-                if (itemView.text_view_5.text.toString().toInt() <= productData.quantity) {
+                if (itemView.text_view_5.text.toString().toUInt() <= productData.quantity.toUInt()) {
                     itemView.text_view_5.text =
-                        "${itemView.text_view_5.text.toString().toInt() + 1}"
+                        "${itemView.text_view_5.text.toString().toUInt() + 1u}"
                     Toast.makeText(
                         mContext,
-                        "${productData.quantity - itemView.text_view_5.text.toString().toInt()} left",
+                        "${productData.quantity.toUInt() - itemView.text_view_5.text.toString().toUInt()} left",
                         Toast.LENGTH_SHORT
                     ).show()
 
