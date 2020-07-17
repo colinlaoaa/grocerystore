@@ -24,7 +24,6 @@ import kotlinx.android.synthetic.main.app_bar.*
 class CategoryActivity : AppCompatActivity() {
 
 
-
     var mList: ArrayList<Category> = ArrayList()
     lateinit var adapterRecyclerCategory: AdapterRecyclerCategory
 
@@ -48,10 +47,9 @@ class CategoryActivity : AppCompatActivity() {
         recycler_view_1.adapter = adapterRecyclerCategory
 
 
-
     }
 
-    private fun getdata()  {
+    private fun getdata() {
         var requestQueue = Volley.newRequestQueue(this)
         var request = StringRequest(Request.Method.GET, Endpoints.getCategory(), Response.Listener {
 
@@ -76,15 +74,16 @@ class CategoryActivity : AppCompatActivity() {
 
         return true
     }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         super.onOptionsItemSelected(item);
-        when(item.itemId){
+        when (item.itemId) {
             android.R.id.home -> {
                 finish()
             }
 
-            R.id.cart_menu ->{
-                startActivity(Intent(this,CartContentActivity::class.java))
+            R.id.cart_menu -> {
+                startActivity(Intent(this, CartContentActivity::class.java))
             }
         }
         return true;

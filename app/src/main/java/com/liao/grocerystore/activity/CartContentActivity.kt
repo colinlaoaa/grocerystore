@@ -32,8 +32,6 @@ class CartContentActivity : AppCompatActivity() {
     }
 
 
-
-
     private fun init() {
         mList = dbHelper.readCartContent()
         recycler_view_3.layoutManager = LinearLayoutManager(this)
@@ -43,16 +41,15 @@ class CartContentActivity : AppCompatActivity() {
     }
 
 
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         super.onOptionsItemSelected(item);
-        when(item.itemId){
+        when (item.itemId) {
             android.R.id.home -> {
                 finish()
             }
 
-            R.id.cart_menu ->{
-                startActivity(Intent(this,CartContentActivity::class.java))
+            R.id.cart_menu -> {
+                startActivity(Intent(this, CartContentActivity::class.java))
             }
         }
         return true;

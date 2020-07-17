@@ -42,17 +42,16 @@ class AdapterRecyclerCategory(var mContext: Context, var mList: List<Category>) 
     inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(category: Category) {
             itemView.text_view_1.text = category.catName
-            Picasso.get().load(Config.IMAGE_BASE_URL + category.catImage).placeholder(R.drawable.noimage)
+            Picasso.get().load(Config.IMAGE_BASE_URL + category.catImage)
+                .placeholder(R.drawable.noimage)
                 .error(R.drawable.noimage)
                 .into(itemView.image_view_2)
 
-            itemView.view_1.setOnClickListener{
+            itemView.view_1.setOnClickListener {
                 var myIntent = Intent(mContext, SubCategoryActivity::class.java)
-                myIntent.putExtra(Category.CATID,category.catId)
+                myIntent.putExtra(Category.CATID, category.catId)
                 mContext.startActivity(myIntent)
             }
-
-
 
 
         }

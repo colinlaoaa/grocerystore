@@ -2,6 +2,7 @@ package com.liao.grocerystore.helper
 
 import android.content.ContentValues
 import android.content.Context
+import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
@@ -10,10 +11,7 @@ import com.liao.grocerystore.model.CartContent
 class DBHelper(var mContext: Context) : SQLiteOpenHelper(
     mContext, DATABASE_NAME, null,
     DATABASE_VERSION
-)
-
-
-{
+) {
 
     companion object {
         const val DATABASE_NAME = "GROCERY"
@@ -37,7 +35,18 @@ class DBHelper(var mContext: Context) : SQLiteOpenHelper(
         Log.d("db", "onUpgrade")
     }
 
-    fun addCartContent(addCartContent:CartContent) {
+    fun addquantity(_id: String): Boolean {
+        var db = writableDatabase
+        val whereClause = arrayOf(_id)
+        val query = "select * from $TABLE_NAME where $COL_ID = ?"
+        var cursor = db.rawQuery(query, whereClause)
+        var count = cursor.count
+        return count != 0
+
+
+    }
+
+    fun addCartContent(addCartContent: CartContent) {
         var db = writableDatabase
         var contentValues = ContentValues()
         contentValues.put(COL_ID, addCartContent._id)
@@ -49,16 +58,26 @@ class DBHelper(var mContext: Context) : SQLiteOpenHelper(
         db.insert(TABLE_NAME, null, contentValues)
     }
 
+    fun readCartContentItemQuantity(_id: String): Int {
+        var db = writableDatabase
+        var cartList = readCartContent()
+        for(cartItem in cartList){
+            if(cartItem._id == _id){
+                return cartItem.quantity
+            }
+        }
+        return 0
+    }
 
-    // delete from employee where id = 1
-    fun deleteCartContent(_id : String) {
+
+    fun deleteCartContent(_id: String) {
         var db = writableDatabase
         val whereClause = "$COL_ID = ?"
         val whereArgs = arrayOf(_id)
         db.delete(TABLE_NAME, whereClause, whereArgs)
     }
 
-//    // update employee set name = 'mark 2', email = 'm2@gmail.com' where id = 1
+
     fun updateCartContent(updateCartContent: CartContent) {
         var db = writableDatabase
         val whereClause = "$COL_ID = ?"
@@ -73,8 +92,7 @@ class DBHelper(var mContext: Context) : SQLiteOpenHelper(
     }
 
 
-
-    fun readCartContent(): ArrayList<CartContent>{
+    fun readCartContent(): ArrayList<CartContent> {
         var db = writableDatabase
         var cartContentList: ArrayList<CartContent> = ArrayList()
         var columns = arrayOf(
@@ -86,18 +104,18 @@ class DBHelper(var mContext: Context) : SQLiteOpenHelper(
             COL_QUANTITY
         )
         var cursor = db.query(TABLE_NAME, columns, null, null, null, null, null)
-        if(cursor !=null && cursor.moveToFirst()){
-            do{
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
                 var id = cursor.getString(cursor.getColumnIndex(COL_ID))
                 var productName = cursor.getString(cursor.getColumnIndex(COL_PRODUCTNAME))
                 var price = cursor.getDouble(cursor.getColumnIndex(COL_PRICE))
                 var mrp = cursor.getDouble(cursor.getColumnIndex(COL_MRP))
                 var image = cursor.getString(cursor.getColumnIndex(COL_IMAGE))
                 var quantity = cursor.getInt(cursor.getColumnIndex(COL_QUANTITY))
-                var cartContent = CartContent(id,productName,price,mrp,image,quantity)
+                var cartContent = CartContent(id, productName, price, mrp, image, quantity)
                 cartContentList.add(cartContent)
 
-            }while (cursor.moveToNext())
+            } while (cursor.moveToNext())
         }
         cursor.close()
         return cartContentList

@@ -8,4 +8,5 @@
     <string name="mobile">mobile</string>
     <string name="to_register">back to register</string>
     <string name="to_login">back to login</string>
+    <string name="button_remove">remove</string>
 </resources>

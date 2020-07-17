@@ -61,31 +61,67 @@
             android:textSize="20dp" />
     </ScrollView>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:orientation="horizontal">
+        >
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:background="@drawable/long_round_button"
-            android:text="BUY"
-            android:textColor="#fff"
-            android:textSize="25dp" />
 
         <Button
             android:id="@+id/button_add_cart"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
             android:background="@drawable/long_round_button"
-            android:text="ADD cart"
-            android:layout_marginLeft="25dp"
+            android:text="ADD CART"
             android:textColor="#fff"
             android:textSize="25dp" />
-    </LinearLayout>
+
+        <Button
+            android:id="@+id/button_minus"
+            android:layout_width="22.5dp"
+            android:layout_height="45dp"
+            android:background="@drawable/lefthalf_round_button"
+            android:layout_marginLeft="57.5dp"
+            android:gravity="center"
+            android:text="-"
+            android:textColor="#000"
+            android:textSize="30dp" />
+
+        <TextView
+            android:id="@+id/text_view_quantity"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:gravity="center"
+            android:layout_marginLeft="80dp"
+            android:text="0"
+            android:textColor="#000"
+            android:textSize="30dp" />
+
+        <Button
+            android:id="@+id/button_add"
+            android:layout_width="22.5dp"
+            android:layout_height="45dp"
+            android:layout_toRightOf="@+id/text_view_quantity"
+            android:background="@drawable/righthalf_round_button"
+            android:gravity="center"
+            android:text="+"
+            android:textColor="#000"
+            android:textSize="30dp" />
+
+
+        <Button
+            android:id="@+id/button_buy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/long_round_button"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="25dp"
+            android:text="BUY"
+            android:textColor="#fff"
+            android:textSize="25dp" />
+    </RelativeLayout>
 
 
 </LinearLayout>

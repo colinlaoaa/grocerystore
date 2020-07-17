@@ -89,7 +89,7 @@ class SubCategoryActivity : AppCompatActivity() {
             }
 
             R.id.cart_menu -> {
-                startActivity(Intent(this,CartContentActivity::class.java))
+                startActivity(Intent(this, CartContentActivity::class.java))
             }
         }
         return true;

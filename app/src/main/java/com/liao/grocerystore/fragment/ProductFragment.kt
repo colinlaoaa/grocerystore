@@ -23,20 +23,18 @@ import kotlinx.android.synthetic.main.fragment_category.view.*
 private const val ARG_PARAM1 = "param1"
 
 
-
 /**
  * A simple [Fragment] subclass.
  * Use the [CategoryFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
 class CategoryFragment : Fragment() {
-
+    lateinit var adapterRecyclerFragment: AdapterRecyclerFragment
 
     var mList: ArrayList<ProductData> = ArrayList()
 
     // TODO: Rename and change types of parameters
     private var param1: String? = null
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,15 +60,17 @@ class CategoryFragment : Fragment() {
 
     private fun init(view: View) {
 
-        getdata(param1!!.toString().toUInt().toInt(),view)
+        getdata(param1!!.toString().toInt())
 
+        view.recycler_view_2.layoutManager = LinearLayoutManager(context)
+        adapterRecyclerFragment = AdapterRecyclerFragment(activity!!, mList)
 
-
+        view.recycler_view_2.adapter = adapterRecyclerFragment
 
 
     }
 
-    private fun getdata(subId: Int,view: View) {
+    private fun getdata(subId: Int) {
 
         var requestQueue = Volley.newRequestQueue(context)
         var request = StringRequest(
@@ -80,14 +80,8 @@ class CategoryFragment : Fragment() {
 
                 var gson = GsonBuilder().create()
                 var newResponse = gson.fromJson(it, ProductContent::class.java)
-                mList= newResponse.data
-
-                view.recycler_view_2.layoutManager = LinearLayoutManager(context)
-                var adapterRecyclerFragment = AdapterRecyclerFragment(activity!!, mList)
+                mList = newResponse.data
                 adapterRecyclerFragment.setdata(mList)
-                view.recycler_view_2.adapter = adapterRecyclerFragment
-
-
 
 
             },
@@ -98,6 +92,11 @@ class CategoryFragment : Fragment() {
         requestQueue.add(request)
 
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        getdata(param1.toString().toInt())
     }
 
 

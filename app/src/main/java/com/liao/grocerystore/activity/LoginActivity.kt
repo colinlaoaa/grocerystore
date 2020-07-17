@@ -12,6 +12,7 @@ import com.android.volley.toolbox.Volley
 import com.google.gson.GsonBuilder
 import com.liao.grocerystore.R
 import com.liao.grocerystore.app.Config
+import com.liao.grocerystore.app.Endpoints
 import com.liao.myapplication.helper.SessionManager
 import com.liao.myapplication.model.Data
 import com.liao.myapplication.model.LoginFailResponse
@@ -48,7 +49,6 @@ class LoginActivity : AppCompatActivity() {
         var password = edit_text_2.text.toString()
 
 
-
         var params = HashMap<String, String>()
         params["email"] = email
         params["password"] = password
@@ -56,9 +56,8 @@ class LoginActivity : AppCompatActivity() {
         val jsonObject = JSONObject(params as Map<*, *>)
 
 
-
         var request = JsonObjectRequest(
-            Request.Method.POST, Config.LOGIN_URL, jsonObject,
+            Request.Method.POST, Endpoints.getLogin(), jsonObject,
             Response.Listener {
                 var gson = GsonBuilder().create()
                 var login = gson.fromJson(it.toString(), LoginFailResponse::class.java)
