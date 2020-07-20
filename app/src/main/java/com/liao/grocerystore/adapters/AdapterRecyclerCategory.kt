@@ -1,13 +1,11 @@
 package com.liao.grocerystore.adapters
 
 import android.content.Context
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.liao.grocerystore.R
-import com.liao.grocerystore.activity.SubCategoryActivity
 import com.liao.grocerystore.app.Config
 import com.liao.grocerystore.model.Category
 import com.squareup.picasso.Picasso
@@ -17,6 +15,7 @@ import kotlinx.android.synthetic.main.new_row.view.*
 class AdapterRecyclerCategory(var mContext: Context, var mList: List<Category>) :
     RecyclerView.Adapter<AdapterRecyclerCategory.MyViewHolder>() {
 
+    var listener: OnAdapterInteraction? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         var view = LayoutInflater.from(mContext).inflate(R.layout.new_row, parent, false)
@@ -33,6 +32,18 @@ class AdapterRecyclerCategory(var mContext: Context, var mList: List<Category>) 
         holder.bind(category)
     }
 
+    interface OnAdapterInteraction {
+
+        fun onItemClicked(
+            itemView: View,
+            category: Category
+        )
+    }
+
+    fun setAdapterListener(onAdapterInteraction: OnAdapterInteraction) {
+        listener = onAdapterInteraction
+    }
+
     fun setdata(list: ArrayList<Category>) {
         mList = list
         notifyDataSetChanged()
@@ -47,11 +58,10 @@ class AdapterRecyclerCategory(var mContext: Context, var mList: List<Category>) 
                 .error(R.drawable.noimage)
                 .into(itemView.image_view_2)
 
-            itemView.view_1.setOnClickListener {
-                var myIntent = Intent(mContext, SubCategoryActivity::class.java)
-                myIntent.putExtra(Category.CATID, category.catId)
-                mContext.startActivity(myIntent)
-            }
+            itemView.progress_bar.visibility = View.GONE
+            listener?.onItemClicked(itemView,category)
+
+
 
 
         }

@@ -1,6 +1,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bg"
     android:orientation="vertical"
     android:padding="2dp">
 
@@ -11,7 +12,7 @@
         style="@style/edit_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#fff"
+        android:background="@android:color/transparent"
         android:hint="@string/first_name" />
 
     <EditText
@@ -19,7 +20,7 @@
         style="@style/edit_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#fff"
+        android:background="@android:color/transparent"
         android:hint="@string/email" />
 
     <EditText
@@ -27,15 +28,16 @@
         style="@style/edit_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#fff"
-        android:hint="@string/password" />
+        android:background="@android:color/transparent"
+        android:hint="@string/password"
+        android:password="true" />
 
     <EditText
         android:id="@+id/edit_text_6"
         style="@style/edit_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#fff"
+        android:background="@android:color/transparent"
         android:hint="@string/mobile" />
 
     <Button
@@ -49,8 +51,7 @@
         android:id="@+id/text_view_2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/to_login"
         android:gravity="center"
-        />
+        android:text="@string/to_login" />
 
 </LinearLayout>

@@ -3,7 +3,8 @@ package com.liao.grocerystore.adapters
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import com.liao.grocerystore.fragment.CategoryFragment
+import com.liao.grocerystore.fragment.ProductFragment
+
 import com.liao.grocerystore.model.Data
 
 class AdapterMyFragment(fm: FragmentManager) : FragmentPagerAdapter(fm) {
@@ -21,7 +22,7 @@ class AdapterMyFragment(fm: FragmentManager) : FragmentPagerAdapter(fm) {
     fun addFragment(list: ArrayList<Data>?) {
         if (list != null) {
             for (data in list) {
-                mFragmentList.add(CategoryFragment.newInstance(data.subId.toString()))
+                mFragmentList.add(ProductFragment.newInstance(data.subId.toString()))
                 mTitleList.add(data.subName)
             }
         }

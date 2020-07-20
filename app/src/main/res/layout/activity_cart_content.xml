@@ -1,16 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:background="@drawable/bg">
 
-    <include layout="@layout/app_bar" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:id="@+id/view_all">
+
+        <include layout="@layout/app_bar" />
 
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view_3"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view_3"
+            android:layout_width="match_parent"
+            android:layout_below="@+id/toolbar"
+            android:layout_height="wrap_content"
+            />
 
 
-</LinearLayout>
+        <TextView
+            android:layout_below="@+id/recycler_view_3"
+            android:id="@+id/text_view_subtotal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Subtotal" />
+
+        <TextView
+            android:id="@+id/text_view_subtotal_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/text_view_subtotal"
+            android:layout_alignParentRight="true" />
+
+        <TextView
+            android:id="@+id/text_view_tax"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/text_view_subtotal"
+            android:text="Tax and Fees" />
+
+        <TextView
+            android:id="@+id/text_view_tax_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/text_view_tax"
+            android:layout_alignParentRight="true" />
+
+        <TextView
+            android:id="@+id/text_view_saving"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/text_view_tax"
+            android:text="Your Saving" />
+
+        <TextView
+            android:id="@+id/text_view_delivery_saving"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/text_view_saving"
+            android:layout_alignParentRight="true" />
+
+        <TextView
+            android:id="@+id/text_view_total"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/text_view_saving"
+            android:text="Total Payment" />
+
+        <TextView
+            android:id="@+id/text_view_total_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/text_view_total"
+            android:layout_alignParentRight="true" />
+
+        <Button
+            android:layout_width="150dp"
+            android:layout_height="60dp"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/text_view_total"
+            android:layout_margin="20dp"
+            android:background="@drawable/checkout_button"
+            android:typeface="sans"/>
+
+
+
+    </RelativeLayout>
+
+
+</androidx.core.widget.NestedScrollView>

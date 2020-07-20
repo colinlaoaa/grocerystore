@@ -22,6 +22,8 @@ import kotlinx.android.synthetic.main.new_row_fragment.view.*
 class ProductDetailActivity : AppCompatActivity() {
 
     lateinit var dbHelper: DBHelper
+    lateinit var cartContent: CartContent
+    lateinit var productData: ProductData
     override fun onCreate(savedInstanceState: Bundle?) {
 
 
@@ -30,80 +32,23 @@ class ProductDetailActivity : AppCompatActivity() {
         dbHelper = DBHelper(this)
 
 
-        var i = intent
-        var productData = i.getSerializableExtra(ProductData.PRODUCT_DETAIL) as ProductData
 
-        Picasso.get().load(Config.IMAGE_BASE_URL + productData.image)
-            .placeholder(R.drawable.noimage)
-            .error(R.drawable.noimage)
-            .into(image_view_3)
+        init()
 
-        text_view_1.text = "mrp: " + productData.mrp.toString()
-        text_view_1.paint.flags = Paint.STRIKE_THRU_TEXT_FLAG
-        text_view_2.text = "price: " + productData.price.toString()
-        text_view_3.text = productData.productName
-        text_view_4.text = productData.description
+        buyButtonHandle()
+
+        addCartButtonHandle()
+
+        addMinusButtonHandle()
 
 
-        var cartContent = CartContent(
-            productData._id,
-            productData.productName,
-            productData.price,
-            productData.mrp,
-            productData.image,
-            0
-        )
-        var quantity = dbHelper.readCartContentItemQuantity(cartContent._id)
-        cartContent.quantity = quantity
-        text_view_quantity.text = quantity.toString()
+        var toolbar = toolbar
+        toolbar.title = "${productData.productName}"
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
 
-        button_buy.setOnClickListener {
-
-            if (dbHelper.addquantity(cartContent._id)) {
-                cartContent.quantity += 1
-                dbHelper.updateCartContent(cartContent)
-
-            } else {
-                cartContent.quantity += 1
-                dbHelper.addCartContent(cartContent)
-            }
-            Toast.makeText(applicationContext, "ADDED", Toast.LENGTH_SHORT).show()
-
-            startActivity(Intent(this, CartContentActivity::class.java))
-
-        }
-
-
-        if (text_view_quantity.text != "0") {
-            button_add_cart.visibility = View.GONE
-            button_add.visibility = View.VISIBLE
-            button_minus.visibility = View.VISIBLE
-        } else {
-            button_add_cart.visibility = View.VISIBLE
-            button_add.visibility = View.GONE
-            button_minus.visibility = View.GONE
-        }
-
-
-
-        button_add_cart.setOnClickListener {
-            button_add_cart.visibility = View.GONE
-            button_add.visibility = View.VISIBLE
-            button_minus.visibility = View.VISIBLE
-            if (dbHelper.addquantity(cartContent._id)) {
-                cartContent.quantity += 1
-                dbHelper.updateCartContent(cartContent)
-
-            } else {
-                cartContent.quantity += 1
-                dbHelper.addCartContent(cartContent)
-            }
-            Toast.makeText(applicationContext, "ADDED", Toast.LENGTH_SHORT).show()
-            text_view_quantity.text = cartContent.quantity.toString()
-
-        }
-
-
+    private fun addMinusButtonHandle() {
         button_minus.setOnClickListener {
             if (text_view_quantity.text == "1") {
                 cartContent.quantity -= 1
@@ -122,27 +67,24 @@ class ProductDetailActivity : AppCompatActivity() {
 
         button_add.setOnClickListener {
 
-            if (dbHelper.addquantity(cartContent._id)) {
-                cartContent.quantity += 1
-                dbHelper.updateCartContent(cartContent)
-            } else {
-                cartContent.quantity = text_view_quantity.text.toString().toInt()
+            if (!dbHelper.addquantity(cartContent._id)) {
                 cartContent.quantity += 1
                 dbHelper.addCartContent(cartContent)
             }
-
-            if (text_view_quantity.text.toString()
-                    .toInt() <= productData.quantity.toInt()
+            if (dbHelper.addquantity(cartContent._id) && text_view_quantity.text.toString()
+                    .toInt() < productData.quantity
             ) {
+                cartContent.quantity += 1
+                dbHelper.updateCartContent(cartContent)
                 text_view_quantity.text =
                     "${cartContent.quantity}"
-                Toast.makeText(
-                    this,
-                    "${productData.quantity.toInt() - text_view_quantity.text.toString()
-                        .toInt()} left",
-                    Toast.LENGTH_SHORT
-                ).show()
-
+                if ((productData.quantity - cartContent.quantity) % 5 == 0) {
+                    Toast.makeText(
+                        this,
+                        "${productData.quantity - cartContent.quantity} left",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
             } else {
                 Toast.makeText(
                     this,
@@ -150,14 +92,87 @@ class ProductDetailActivity : AppCompatActivity() {
                     Toast.LENGTH_SHORT
                 ).show()
             }
+        }
+    }
 
+
+    private fun init() {
+        var i = intent
+        productData = i.getSerializableExtra(ProductData.PRODUCT_DETAIL) as ProductData
+
+        Picasso.get().load(Config.IMAGE_BASE_URL + productData.image)
+            .placeholder(R.drawable.noimage)
+            .error(R.drawable.noimage)
+            .into(image_view_3)
+
+        text_view_1.text = "mrp: " + productData.mrp.toString()
+        text_view_1.paint.flags = Paint.STRIKE_THRU_TEXT_FLAG
+        text_view_2.text = "price: " + productData.price.toString()
+        text_view_3.text = productData.productName
+        text_view_4.text = productData.description
+
+
+        cartContent = CartContent(
+            productData._id,
+            productData.productName,
+            productData.price,
+            productData.mrp,
+            productData.image,
+            0
+        )
+        var quantity = dbHelper.readCartContentItemQuantity(cartContent._id)
+        cartContent.quantity = quantity
+        text_view_quantity.text = quantity.toString()
+
+        if (text_view_quantity.text != "0") {
+            button_add_cart.visibility = View.GONE
+            button_add.visibility = View.VISIBLE
+            button_minus.visibility = View.VISIBLE
+        } else {
+            button_add_cart.visibility = View.VISIBLE
+            button_add.visibility = View.GONE
+            button_minus.visibility = View.GONE
         }
 
+    }
 
-        var toolbar = toolbar
-        toolbar.title = "${productData.productName}"
-        setSupportActionBar(toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+    private fun addCartButtonHandle() {
+        button_add_cart.setOnClickListener {
+            button_add_cart.visibility = View.GONE
+            button_add.visibility = View.VISIBLE
+            button_minus.visibility = View.VISIBLE
+            if (dbHelper.addquantity(cartContent._id)) {
+                cartContent.quantity += 1
+                dbHelper.updateCartContent(cartContent)
+
+            } else {
+                cartContent.quantity += 1
+                dbHelper.addCartContent(cartContent)
+            }
+            Toast.makeText(applicationContext, "ADDED", Toast.LENGTH_SHORT).show()
+            text_view_quantity.text = cartContent.quantity.toString()
+
+        }
+    }
+
+
+    private fun buyButtonHandle() {
+        button_buy.setOnClickListener {
+
+            if (dbHelper.addquantity(cartContent._id)) {
+                cartContent.quantity += 1
+                dbHelper.updateCartContent(cartContent)
+
+            } else {
+                cartContent.quantity += 1
+                dbHelper.addCartContent(cartContent)
+            }
+            Toast.makeText(applicationContext, "ADDED", Toast.LENGTH_SHORT).show()
+
+            startActivity(Intent(this, CartContentActivity::class.java))
+
+        }
     }
 
 
@@ -183,7 +198,7 @@ class ProductDetailActivity : AppCompatActivity() {
     }
 
     override fun onResume() {
-
         super.onResume()
+        init()
     }
 }

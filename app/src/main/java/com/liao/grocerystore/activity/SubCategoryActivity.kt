@@ -27,8 +27,6 @@ class SubCategoryActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
-        //supportActionBar!!.title = "SubCategory"
-
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sub_category)
 

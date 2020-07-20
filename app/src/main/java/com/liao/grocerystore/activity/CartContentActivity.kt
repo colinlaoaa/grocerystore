@@ -1,23 +1,25 @@
 package com.liao.grocerystore.activity
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuInflater
 import android.view.MenuItem
-import android.widget.Toast
+import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.liao.grocerystore.R
-import com.liao.grocerystore.adapters.AdapterRecycerCart
+import com.liao.grocerystore.adapters.AdapterRecyclerCart
 import com.liao.grocerystore.helper.DBHelper
 import com.liao.grocerystore.model.CartContent
 import kotlinx.android.synthetic.main.activity_cart_content.*
 import kotlinx.android.synthetic.main.app_bar.*
+import kotlinx.android.synthetic.main.new_row_cart.view.*
+import java.text.DecimalFormat
 
-class CartContentActivity : AppCompatActivity() {
+class CartContentActivity : AppCompatActivity(), AdapterRecyclerCart.OnAdapterInteraction {
     var dbHelper = DBHelper(this)
     lateinit var mList: List<CartContent>
+    private lateinit var adapterRecyclerCart: AdapterRecyclerCart
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,14 +31,31 @@ class CartContentActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         init()
+
+        checkoutTotal()
+        view_all.setOnClickListener {
+            checkoutTotal()
+        }
+
+
+    }
+
+    private fun checkoutTotal() {
+        var res = adapterRecyclerCart.checkout()
+        val df = DecimalFormat("#.00")
+        text_view_subtotal_number.text = df.format(res[0]).toString()
+        text_view_tax_number.text = df.format(res[2]).toString()
+        text_view_delivery_saving.text = df.format(res[1]).toString()
+        text_view_total_number.text = df.format(res[3]).toString()
     }
 
 
     private fun init() {
         mList = dbHelper.readCartContent()
         recycler_view_3.layoutManager = LinearLayoutManager(this)
-        var adapterRecycerCart = AdapterRecycerCart(this, mList)
-        recycler_view_3.adapter = adapterRecycerCart
+        adapterRecyclerCart = AdapterRecyclerCart(this, mList)
+        adapterRecyclerCart.setAdapterListener(this)
+        recycler_view_3.adapter = adapterRecyclerCart
 
     }
 
@@ -53,5 +72,25 @@ class CartContentActivity : AppCompatActivity() {
             }
         }
         return true;
+    }
+
+    override fun onItemClickedRemove(cartContent: CartContent) {
+        dbHelper.deleteCartContent(cartContent._id)
+        checkoutTotal()
+    }
+
+    override fun onAddButtonClicked(itemView: View, cartContent: CartContent) {
+        cartContent.quantity += 1
+        dbHelper.updateCartContent(cartContent)
+        itemView.text_view_4.text = cartContent.quantity.toString()
+        checkoutTotal()
+    }
+
+    override fun onMinusButtonClicked(itemView: View, cartContent: CartContent) {
+        cartContent.quantity -= 1
+        itemView.text_view_4.text =
+            "${cartContent.quantity}"
+        dbHelper.updateCartContent(cartContent)
+        checkoutTotal()
     }
 }

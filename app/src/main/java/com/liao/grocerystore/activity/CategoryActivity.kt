@@ -1,11 +1,13 @@
 package com.liao.grocerystore.activity
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import com.android.volley.Request
@@ -20,8 +22,9 @@ import com.liao.grocerystore.model.Category
 import com.liao.grocerystore.model.CategoryResponse
 import kotlinx.android.synthetic.main.activity_category.*
 import kotlinx.android.synthetic.main.app_bar.*
+import kotlinx.android.synthetic.main.new_row.view.*
 
-class CategoryActivity : AppCompatActivity() {
+class CategoryActivity : AppCompatActivity(),AdapterRecyclerCategory.OnAdapterInteraction {
 
 
     var mList: ArrayList<Category> = ArrayList()
@@ -36,7 +39,7 @@ class CategoryActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        image_view_1.setImageResource(R.drawable.ic_android_black_24dp)
+        image_view_1.setImageResource(R.drawable.pic1)
 
 
         getdata()
@@ -44,6 +47,7 @@ class CategoryActivity : AppCompatActivity() {
 
         recycler_view_1.layoutManager = GridLayoutManager(this, 2)
         adapterRecyclerCategory = AdapterRecyclerCategory(this, mList)
+        adapterRecyclerCategory.setAdapterListener(this)
         recycler_view_1.adapter = adapterRecyclerCategory
 
 
@@ -87,5 +91,13 @@ class CategoryActivity : AppCompatActivity() {
             }
         }
         return true;
+    }
+
+    override fun onItemClicked(itemView: View, category: Category) {
+        itemView.view_1.setOnClickListener {
+            var myIntent = Intent(this, SubCategoryActivity::class.java)
+            myIntent.putExtra(Category.CATID, category.catId)
+            startActivity(myIntent)
+        }
     }
 }

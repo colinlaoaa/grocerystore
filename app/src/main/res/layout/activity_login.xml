@@ -1,6 +1,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bg"
     android:orientation="vertical"
     android:padding="2dp">
 
@@ -12,7 +13,7 @@
         style="@style/edit_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#fff"
+        android:background="@android:color/transparent"
         android:hint="@string/email" />
 
     <EditText
@@ -20,8 +21,9 @@
         style="@style/edit_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#fff"
-        android:hint="@string/password" />
+        android:background="@android:color/transparent"
+        android:hint="@string/password"
+        android:password="true" />
 
 
     <Button
@@ -35,10 +37,16 @@
         android:id="@+id/text_view_1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/to_register"
         android:gravity="center"
-        />
+        android:text="@string/to_register" />
 
+    <ImageView
+        android:layout_marginTop="40dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_gravity="center"
+        android:background="@drawable/bg"
+        android:src="@drawable/pic6"/>
 
 
 </LinearLayout>
