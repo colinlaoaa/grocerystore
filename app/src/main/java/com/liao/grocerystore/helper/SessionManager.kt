@@ -15,21 +15,24 @@ class SessionManager(mContext: Context) {
         const val KEY_MOBILE = "mobile"
         const val KEY_TOKEN = "token"
         const val KEY_IS_LOGGED_IN = "isLoggedIn"
+        const val KEY_USER_ID = "_id"
     }
 
 
-    fun register(firstName: String, email: String, mobile: String) {
+    fun register(firstName: String, email: String, mobile: String, _id: String) {
         editor.putString(KEY_NAME, firstName)
         editor.putString(KEY_REG_EMAIL, email)
         editor.putString(KEY_MOBILE, mobile)
+        editor.putString(KEY_USER_ID, _id)
         editor.commit()
     }
 
 
-    fun login(email: String, token: String) {
+    fun login(email: String, token: String, _id: String) {
         editor.putString(KEY_LOG_EMAIL, email)
         editor.putString(KEY_TOKEN, token)
         editor.putBoolean(KEY_IS_LOGGED_IN, true)
+        editor.putString(KEY_USER_ID, _id)
         editor.commit()
     }
 
@@ -41,6 +44,10 @@ class SessionManager(mContext: Context) {
         editor.clear()
         editor.commit()
 
+    }
+
+    fun getUserId(): String? {
+        return sharedPreferences.getString(KEY_USER_ID,"")
     }
 
 

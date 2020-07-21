@@ -79,13 +79,14 @@
             android:layout_alignParentRight="true" />
 
         <Button
-            android:layout_width="150dp"
-            android:layout_height="60dp"
-            android:layout_centerHorizontal="true"
-            android:layout_below="@+id/text_view_total"
-            android:layout_margin="20dp"
-            android:background="@drawable/checkout_button"
-            android:typeface="sans"/>
+            android:id="@+id/button_checkout"
+            android:layout_width="100dp"
+            android:layout_height="35dp"
+            android:layout_below="@+id/text_view_total_number"
+            android:layout_alignParentRight="true"
+            android:text="Checkout"
+            android:background="@android:color/white"
+            />
 
 
 

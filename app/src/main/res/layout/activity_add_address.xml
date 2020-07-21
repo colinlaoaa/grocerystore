@@ -1,63 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg"
     android:orientation="vertical"
-    android:padding="2dp">
-
-    <include layout="@layout/app_bar" />
+    android:background="@drawable/bg">
 
     <EditText
-        android:padding="5dp"
-        android:id="@+id/edit_text_3"
+        android:id="@+id/edit_text_pincode"
         style="@style/edit_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
-        android:hint="@string/first_name" />
+        android:hint="pincode" />
 
     <EditText
-        android:padding="5dp"
-        android:id="@+id/edit_text_4"
+        android:id="@+id/edit_text_houseNo"
         style="@style/edit_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
-        android:hint="@string/email" />
+        android:hint="houseNo" />
 
     <EditText
-        android:padding="5dp"
-        android:id="@+id/edit_text_5"
+        android:id="@+id/edit_text_streetName"
         style="@style/edit_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
-        android:hint="@string/password"
-        android:password="true" />
+        android:hint="streetName" />
 
     <EditText
-        android:padding="5dp"
-        android:id="@+id/edit_text_6"
+        android:id="@+id/edit_text_city"
         style="@style/edit_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
-        android:hint="@string/mobile" />
+        android:hint="city" />
 
-    <Button
-        android:layout_margin="15dp"
-        android:id="@+id/button_register"
+    <EditText
+        android:id="@+id/edit_text_type"
+        style="@style/edit_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="5dp"
-        android:background="@android:color/white"
-        android:text="Register" />
+        android:background="@android:color/transparent"
+        android:hint="type" />
 
-    <TextView
-        android:id="@+id/text_view_2"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="@string/to_login" />
+        android:layout_height="match_parent"
+        android:gravity="bottom"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/button_save_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="Save Address"
+            android:background="@android:color/white"/>
+
+    </LinearLayout>
+
 
 </LinearLayout>

@@ -63,7 +63,7 @@ class LoginActivity : AppCompatActivity() {
                 var login = gson.fromJson(it.toString(), LoginFailResponse::class.java)
                 var loginsuccess = gson.fromJson(it.toString(), LoginResponse::class.java)
                 if (!login.error) {
-                    sessionManager.login(email, loginsuccess.token)
+                    sessionManager.login(email, loginsuccess.token,loginsuccess.user._id)
                     startActivity(Intent(this, CategoryActivity::class.java))
 
 

@@ -16,6 +16,7 @@ import com.google.gson.GsonBuilder
 import com.liao.grocerystore.R
 import com.liao.grocerystore.adapters.AdapterMyFragment
 import com.liao.grocerystore.app.Endpoints
+import com.liao.grocerystore.helper.toolbar
 import com.liao.grocerystore.model.Category
 import com.liao.grocerystore.model.CategoryContent
 import kotlinx.android.synthetic.main.activity_sub_category.*
@@ -30,10 +31,11 @@ class SubCategoryActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sub_category)
 
-        var toolbar = toolbar
-        toolbar.title = "Sub Category"
-        setSupportActionBar(toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+//        var toolbar = toolbar
+//        toolbar.title = "Sub Category"
+//        setSupportActionBar(toolbar)
+//        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        toolbar("Sub Category")
 
         var i = intent
         var catId = i.getIntExtra(Category.CATID, 1)

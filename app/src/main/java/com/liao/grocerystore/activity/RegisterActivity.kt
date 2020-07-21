@@ -85,7 +85,8 @@ class RegisterActivity : AppCompatActivity() {
                     sessionManager.register(
                         register.data.firstName,
                         register.data.email,
-                        register.data.mobile
+                        register.data.mobile,
+                        register.data._id
                     )
                     Toast.makeText(applicationContext, register.message, Toast.LENGTH_SHORT).show()
                     var myIntent = Intent(this, LoginActivity::class.java)

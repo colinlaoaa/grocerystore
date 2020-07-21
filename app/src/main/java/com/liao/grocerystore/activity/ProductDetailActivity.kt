@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.liao.grocerystore.R
 import com.liao.grocerystore.app.Config
 import com.liao.grocerystore.helper.DBHelper
+import com.liao.grocerystore.helper.toolbar
 import com.liao.grocerystore.model.CartContent
 import com.liao.grocerystore.model.ProductData
 import com.squareup.picasso.Picasso
@@ -42,10 +43,11 @@ class ProductDetailActivity : AppCompatActivity() {
         addMinusButtonHandle()
 
 
-        var toolbar = toolbar
-        toolbar.title = "${productData.productName}"
-        setSupportActionBar(toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+//        var toolbar = toolbar
+//        toolbar.title = "${productData.productName}"
+//        setSupportActionBar(toolbar)
+//        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        toolbar("${productData.productName}")
     }
 
     private fun addMinusButtonHandle() {

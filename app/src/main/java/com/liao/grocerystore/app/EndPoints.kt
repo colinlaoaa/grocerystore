@@ -10,6 +10,8 @@ class Endpoints {
         private const val URL_PRODUCTS = "products/sub"
         private const val URL_LOGIN = "auth/login"
         private const val URL_REGISTER = "auth/register"
+        private const val URL_ADDRESS = "address"
+        private const val URL_ORDERS = "orders"
 
         fun getCategory(): String {
             return Config.BASE_URL + URL_CATEGORY
@@ -29,6 +31,18 @@ class Endpoints {
 
         fun getRegister(): String {
             return "${Config.BASE_URL + URL_REGISTER}"
+        }
+
+        fun uploadAddress(): String {
+            return "${Config.BASE_URL + URL_ADDRESS}"
+        }
+
+        fun readAddress(userId: String?): String {
+            return "${Config.BASE_URL + URL_ADDRESS}/$userId"
+        }
+
+        fun sendOrders(): String{
+            return "${Config.BASE_URL + URL_ORDERS}"
         }
 
     }

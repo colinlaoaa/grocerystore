@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.liao.grocerystore.R
 import com.liao.grocerystore.adapters.AdapterRecyclerCart
 import com.liao.grocerystore.helper.DBHelper
+import com.liao.grocerystore.helper.toolbar
 import com.liao.grocerystore.model.CartContent
 import kotlinx.android.synthetic.main.activity_cart_content.*
 import kotlinx.android.synthetic.main.app_bar.*
@@ -25,16 +26,21 @@ class CartContentActivity : AppCompatActivity(), AdapterRecyclerCart.OnAdapterIn
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cart_content)
 
-        var toolbar = toolbar
-        toolbar.title = "Shopping Cart"
-        setSupportActionBar(toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+//        var toolbar = toolbar
+//        toolbar.title = "Shopping Cart"
+//        setSupportActionBar(toolbar)
+//        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        toolbar("shoppingcart")
 
         init()
 
         checkoutTotal()
         view_all.setOnClickListener {
             checkoutTotal()
+        }
+
+        button_checkout.setOnClickListener {
+            startActivity(Intent(this,AddressActivity::class.java))
         }
 
 

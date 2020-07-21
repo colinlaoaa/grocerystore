@@ -1,19 +1,16 @@
 package com.liao.grocerystore.adapters
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Paint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.liao.grocerystore.R
-import com.liao.grocerystore.activity.CartContentActivity
 import com.liao.grocerystore.app.Config
-import com.liao.grocerystore.helper.DBHelper
 import com.liao.grocerystore.model.CartContent
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.activity_cart_content.view.*
-import kotlinx.android.synthetic.main.activity_product_detail.*
 import kotlinx.android.synthetic.main.new_row_cart.view.*
 
 
@@ -68,7 +65,6 @@ class AdapterRecyclerCart(var mContext: Context, var mList: List<CartContent>) :
         res.add(tax)
         res.add(total)
         return res
-
     }
 
     inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -93,6 +89,7 @@ class AdapterRecyclerCart(var mContext: Context, var mList: List<CartContent>) :
                 listener?.onItemClickedRemove(cartContent)
                 notifyItemRemoved(position)
                 notifyItemChanged(position, mList.size)
+
             }
 
 
@@ -103,10 +100,10 @@ class AdapterRecyclerCart(var mContext: Context, var mList: List<CartContent>) :
             itemView.button_minus.setOnClickListener {
 
                 if (itemView.text_view_4.text == "1") {
-                    mList -= mList[position]
-                    listener?.onItemClickedRemove(cartContent)
-                    notifyItemRemoved(position)
-                    notifyItemChanged(position, mList.size)
+//                    mList -= mList[position]
+//                    listener?.onItemClickedRemove(cartContent)
+//                    notifyItemRemoved(position)
+//                    notifyItemChanged(position, mList.size)
                 } else {
                     listener?.onMinusButtonClicked(itemView, cartContent)
 

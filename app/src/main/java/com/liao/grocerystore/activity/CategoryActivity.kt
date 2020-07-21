@@ -18,6 +18,7 @@ import com.google.gson.GsonBuilder
 import com.liao.grocerystore.R
 import com.liao.grocerystore.adapters.AdapterRecyclerCategory
 import com.liao.grocerystore.app.Endpoints
+import com.liao.grocerystore.helper.toolbar
 import com.liao.grocerystore.model.Category
 import com.liao.grocerystore.model.CategoryResponse
 import kotlinx.android.synthetic.main.activity_category.*
@@ -34,10 +35,12 @@ class CategoryActivity : AppCompatActivity(),AdapterRecyclerCategory.OnAdapterIn
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_category)
 
-        var toolbar = toolbar
-        toolbar.title = "Category"
-        setSupportActionBar(toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+//        var toolbar = toolbar
+//        toolbar.title = "Grocery"
+//        setSupportActionBar(toolbar)
+        //supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        toolbar("Grocery")
+        supportActionBar?.setDisplayHomeAsUpEnabled(false)
 
         image_view_1.setImageResource(R.drawable.pic1)
 
@@ -82,9 +85,9 @@ class CategoryActivity : AppCompatActivity(),AdapterRecyclerCategory.OnAdapterIn
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         super.onOptionsItemSelected(item);
         when (item.itemId) {
-            android.R.id.home -> {
-                finish()
-            }
+//            android.R.id.home -> {
+//                finish()
+//            }
 
             R.id.cart_menu -> {
                 startActivity(Intent(this, CartContentActivity::class.java))
