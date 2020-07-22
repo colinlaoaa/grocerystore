@@ -5,6 +5,8 @@ import android.graphics.Paint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import com.liao.grocerystore.R
 import com.liao.grocerystore.app.Config
@@ -69,6 +71,7 @@ class AdapterRecyclerFragment(var mContext: Context, var mList: ArrayList<Produc
 
             itemView.button_2.visibility = View.GONE
             itemView.button_3.visibility = View.GONE
+
 
             listener?.onItemClicked(itemView, productData)
 

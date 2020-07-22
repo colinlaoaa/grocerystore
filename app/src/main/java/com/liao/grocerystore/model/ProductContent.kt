@@ -9,7 +9,6 @@ data class ProductContent(
 )
 
 data class ProductData(
-    val __v: Int,
     val _id: String,
     val catId: Int,
     val created: String,

@@ -41,10 +41,10 @@ class AdapterAddress(var mContext: Context, var mList: List<Address>) :
 
     inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(address: Address) {
-            itemView.text_view_1.text = address.city
-            itemView.text_view_2.text = address.houseNo
-            itemView.text_view_3.text = address.streetName
-            itemView.text_view_4.text = address.type
+            itemView.text_view_1.text = address.type
+            itemView.text_view_2.text = address.streetName
+            itemView.text_view_3.text = address.city
+            itemView.text_view_4.text = address.houseNo
             itemView.text_view_5.text = address.pincode.toString()
 
             itemView.recycler_view_address_row.setOnClickListener {

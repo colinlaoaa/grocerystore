@@ -11,12 +11,11 @@ import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.google.gson.GsonBuilder
 import com.liao.grocerystore.R
-import com.liao.grocerystore.app.Config
 import com.liao.grocerystore.app.Endpoints
+import com.liao.grocerystore.model.LoginFailResponse
+import com.liao.grocerystore.model.LoginResponse
+import com.liao.grocerystore.model.UserInfo
 import com.liao.myapplication.helper.SessionManager
-import com.liao.myapplication.model.Data
-import com.liao.myapplication.model.LoginFailResponse
-import com.liao.myapplication.model.LoginResponse
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.app_bar.*
 import org.json.JSONObject
@@ -38,7 +37,12 @@ class LoginActivity : AppCompatActivity() {
 
         button_login.setOnClickListener {
             login()
+        }
 
+        check_box_remember.setOnClickListener {
+            if (check_box_remember.isChecked){
+                edit_text_1.setText(sessionManager.getLoginEmail())
+            }
         }
 
     }
@@ -81,6 +85,8 @@ class LoginActivity : AppCompatActivity() {
 
     }
 
+
+
     private fun init() {
         var toolbar = toolbar
         toolbar.title = "Login"
@@ -92,7 +98,7 @@ class LoginActivity : AppCompatActivity() {
         }
 
         var i = intent
-        edit_text_1.setText(i.getStringExtra(Data.EMAIL_KEY))
+        edit_text_1.setText(i.getStringExtra(UserInfo.EMAIL_KEY))
 
 
     }

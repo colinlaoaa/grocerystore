@@ -3,7 +3,7 @@
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg">
+    android:background="@mipmap/bg">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -85,7 +85,7 @@
             android:layout_below="@+id/text_view_total_number"
             android:layout_alignParentRight="true"
             android:text="Checkout"
-            android:background="@android:color/white"
+            android:background="@drawable/button_selector"
             />
 
 

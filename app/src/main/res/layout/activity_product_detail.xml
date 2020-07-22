@@ -3,7 +3,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:weightSum="20"
-    android:background="@drawable/bg">
+    android:background="@mipmap/bg">
 
     <include layout="@layout/app_bar" />
 

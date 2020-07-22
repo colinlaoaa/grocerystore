@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.liao.grocerystore.R
 import com.liao.grocerystore.adapters.AdapterRecyclerCart
@@ -13,6 +15,7 @@ import com.liao.grocerystore.helper.toolbar
 import com.liao.grocerystore.model.CartContent
 import kotlinx.android.synthetic.main.activity_cart_content.*
 import kotlinx.android.synthetic.main.app_bar.*
+import kotlinx.android.synthetic.main.fragment_category.view.*
 import kotlinx.android.synthetic.main.new_row_cart.view.*
 import java.text.DecimalFormat
 
@@ -26,10 +29,7 @@ class CartContentActivity : AppCompatActivity(), AdapterRecyclerCart.OnAdapterIn
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cart_content)
 
-//        var toolbar = toolbar
-//        toolbar.title = "Shopping Cart"
-//        setSupportActionBar(toolbar)
-//        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         toolbar("shoppingcart")
 
         init()
@@ -43,11 +43,10 @@ class CartContentActivity : AppCompatActivity(), AdapterRecyclerCart.OnAdapterIn
             startActivity(Intent(this,AddressActivity::class.java))
         }
 
-
     }
 
     private fun checkoutTotal() {
-        var res = adapterRecyclerCart.checkout()
+        var res = dbHelper.checkoutTotal()
         val df = DecimalFormat("#.00")
         text_view_subtotal_number.text = df.format(res[0]).toString()
         text_view_tax_number.text = df.format(res[2]).toString()
@@ -62,6 +61,14 @@ class CartContentActivity : AppCompatActivity(), AdapterRecyclerCart.OnAdapterIn
         adapterRecyclerCart = AdapterRecyclerCart(this, mList)
         adapterRecyclerCart.setAdapterListener(this)
         recycler_view_3.adapter = adapterRecyclerCart
+
+        recycler_view_3.itemAnimator = DefaultItemAnimator()
+        recycler_view_3.addItemDecoration(
+            DividerItemDecoration(
+                this,
+                DividerItemDecoration.VERTICAL
+            )
+        )
 
     }
 

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<group>
+    <item
+        android:id="@+id/item_account"
+        android:title="My account"/>
+
+    <item
+        android:id="@+id/item_order"
+        android:title="My orders"/>
+
+    <item
+        android:id="@+id/item_category"
+        android:title="My category"/>
+
+
+
+</group>
+</menu>

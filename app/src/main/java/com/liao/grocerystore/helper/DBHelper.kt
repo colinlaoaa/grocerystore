@@ -61,8 +61,8 @@ class DBHelper(var mContext: Context) : SQLiteOpenHelper(
     fun readCartContentItemQuantity(_id: String): Int {
         var db = writableDatabase
         var cartList = readCartContent()
-        for(cartItem in cartList){
-            if(cartItem._id == _id){
+        for (cartItem in cartList) {
+            if (cartItem._id == _id) {
                 return cartItem.quantity
             }
         }
@@ -77,6 +77,11 @@ class DBHelper(var mContext: Context) : SQLiteOpenHelper(
         db.delete(TABLE_NAME, whereClause, whereArgs)
     }
 
+    fun clearCartContent(){
+        var db = writableDatabase
+        db.delete(TABLE_NAME, null, null)
+    }
+
 
     fun updateCartContent(updateCartContent: CartContent) {
         var db = writableDatabase
@@ -89,6 +94,41 @@ class DBHelper(var mContext: Context) : SQLiteOpenHelper(
         contentValues.put(COL_IMAGE, updateCartContent.image)
         contentValues.put(COL_QUANTITY, updateCartContent.quantity)
         db.update(TABLE_NAME, contentValues, whereClause, whereArgs)
+    }
+
+
+    fun checkoutTotal(): ArrayList<Double> {
+        var subtotal: Double = 0.0
+        var saving: Double = 0.0
+        var tax: Double = 0.0
+        var total:Double = 0.0
+        var db = writableDatabase
+        var cartContentList: ArrayList<CartContent> = ArrayList()
+        var columns = arrayOf(
+            COL_PRICE,
+            COL_MRP,
+            COL_QUANTITY
+        )
+        var cursor = db.query(TABLE_NAME, columns, null, null, null, null, null)
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                var quantity = cursor.getInt(cursor.getColumnIndex(COL_QUANTITY))
+                var price = cursor.getDouble(cursor.getColumnIndex(COL_PRICE))
+                var mrp = cursor.getDouble(cursor.getColumnIndex(COL_MRP))
+                subtotal += quantity*price
+                saving+= quantity*(mrp - price)
+                tax += quantity*price*0.02
+                total += quantity*price*1.02
+            } while (cursor.moveToNext())
+            cursor.close()
+
+        }
+        var arrayList = ArrayList<Double>()
+        arrayList.add(subtotal)
+        arrayList.add(saving)
+        arrayList.add(tax)
+        arrayList.add(total)
+        return arrayList
     }
 
 

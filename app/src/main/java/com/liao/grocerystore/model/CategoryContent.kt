@@ -7,8 +7,6 @@ data class CategoryContent(
 )
 
 data class Data(
-    val __v: Int,
-    val _id: String,
     val catId: Int,
     val position: Int,
     val status: Boolean,

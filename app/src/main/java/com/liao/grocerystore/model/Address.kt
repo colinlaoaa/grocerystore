@@ -19,8 +19,6 @@ data class AddressGet(
 )
 
 data class Address(
-    val __v: Int,
-    val _id: String,
     val city: String,
     val houseNo: String,
     val pincode: Int,

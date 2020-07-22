@@ -23,12 +23,6 @@
     </androidx.cardview.widget.CardView>
 
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:layout_below="@+id/card_view_1"
-        android:layout_marginTop="2dp"
-        android:background="#000" />
 
     <TextView
         android:id="@+id/text_view_1"

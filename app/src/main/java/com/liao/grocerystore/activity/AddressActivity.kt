@@ -4,6 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.volley.Request
 import com.android.volley.Response
@@ -17,6 +19,7 @@ import com.liao.grocerystore.model.Address
 import com.liao.grocerystore.model.AddressGet
 import com.liao.myapplication.helper.SessionManager
 import kotlinx.android.synthetic.main.activity_address.*
+import kotlinx.android.synthetic.main.activity_cart_content.*
 
 class AddressActivity : AppCompatActivity() {
     lateinit var sessionManager: SessionManager
@@ -59,6 +62,16 @@ class AddressActivity : AppCompatActivity() {
         recycler_view_address.layoutManager = LinearLayoutManager(this)
         adapterAddress = AdapterAddress(this,mList)
         recycler_view_address.adapter = adapterAddress
+
+        recycler_view_address.itemAnimator = DefaultItemAnimator()
+        recycler_view_address.addItemDecoration(
+            DividerItemDecoration(
+                this,
+                DividerItemDecoration.VERTICAL
+            )
+        )
+
+
         button_add_address.setOnClickListener {
             startActivity(Intent(this, AddAddressActivity::class.java))
         }

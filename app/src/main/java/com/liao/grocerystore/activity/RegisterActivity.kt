@@ -12,11 +12,11 @@ import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.google.gson.GsonBuilder
 import com.liao.grocerystore.R
-import com.liao.grocerystore.app.Config
 import com.liao.grocerystore.app.Endpoints
 import com.liao.myapplication.helper.SessionManager
-import com.liao.myapplication.model.Data
-import com.liao.myapplication.model.RegisterResponse
+import com.liao.grocerystore.model.Data
+import com.liao.grocerystore.model.RegisterResponse
+import com.liao.grocerystore.model.UserInfo
 import kotlinx.android.synthetic.main.activity_register.*
 import kotlinx.android.synthetic.main.app_bar.*
 import org.json.JSONObject
@@ -85,12 +85,11 @@ class RegisterActivity : AppCompatActivity() {
                     sessionManager.register(
                         register.data.firstName,
                         register.data.email,
-                        register.data.mobile,
-                        register.data._id
+                        register.data.mobile
                     )
                     Toast.makeText(applicationContext, register.message, Toast.LENGTH_SHORT).show()
                     var myIntent = Intent(this, LoginActivity::class.java)
-                    myIntent.putExtra(Data.EMAIL_KEY, email)
+                    myIntent.putExtra(UserInfo.EMAIL_KEY, email)
                     startActivity(myIntent)
                 }
             },

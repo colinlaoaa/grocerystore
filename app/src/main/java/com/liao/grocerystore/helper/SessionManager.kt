@@ -19,11 +19,10 @@ class SessionManager(mContext: Context) {
     }
 
 
-    fun register(firstName: String, email: String, mobile: String, _id: String) {
+    fun register(firstName: String, email: String, mobile: String) {
         editor.putString(KEY_NAME, firstName)
         editor.putString(KEY_REG_EMAIL, email)
         editor.putString(KEY_MOBILE, mobile)
-        editor.putString(KEY_USER_ID, _id)
         editor.commit()
     }
 
@@ -48,6 +47,14 @@ class SessionManager(mContext: Context) {
 
     fun getUserId(): String? {
         return sharedPreferences.getString(KEY_USER_ID,"")
+    }
+
+    fun getUserName(): String?{
+        return sharedPreferences.getString(KEY_NAME,"")
+    }
+
+    fun getLoginEmail(): String?{
+        return sharedPreferences.getString(KEY_LOG_EMAIL,"")
     }
 
 

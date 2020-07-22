@@ -47,25 +47,7 @@ class AdapterRecyclerCart(var mContext: Context, var mList: List<CartContent>) :
         listener = onAdapterInteraction
     }
 
-    fun checkout():ArrayList<Double> {
-        notifyDataSetChanged()
-        var subtotal: Double = 0.0
-        var saving: Double = 0.0
-        var tax: Double = 0.0
-        var total = 0.0
-        for (product in mList) {
-            subtotal += product.quantity * product.price
-            saving += product.quantity * (product.mrp - product.price)
-            tax += product.quantity * product.price*0.02
-        }
-        total = subtotal + tax
-        var res = ArrayList<Double>()
-        res.add(subtotal)
-        res.add(saving)
-        res.add(tax)
-        res.add(total)
-        return res
-    }
+
 
     inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(cartContent: CartContent, position: Int) {

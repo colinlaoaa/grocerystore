@@ -14,6 +14,7 @@ import com.liao.grocerystore.app.Endpoints
 import com.liao.grocerystore.helper.DBHelper
 import com.liao.grocerystore.model.*
 import com.liao.myapplication.helper.SessionManager
+import kotlinx.android.synthetic.main.activity_order_confirmation.*
 import org.json.JSONObject
 
 class OrderConfirmationActivity : AppCompatActivity() {
@@ -45,7 +46,7 @@ class OrderConfirmationActivity : AppCompatActivity() {
         sessionManager = SessionManager(this)
         userId = sessionManager.getUserId().toString()
         var params = HashMap<String, Any>()
-        var product:ArrayList<Any> = ArrayList()
+        var product: ArrayList<Any> = ArrayList()
         var singleProduct = HashMap<String, Any>()
         params["userId"] = userId
         for (item in mList) {
@@ -58,6 +59,20 @@ class OrderConfirmationActivity : AppCompatActivity() {
             product.add(jsonObjectProduct)
         }
         params["products"] = product
+
+        var paymentMo = HashMap<String, String>()
+        paymentMo["paymentMode"] = paymentMode
+        var jsonObjectPayment = JSONObject(paymentMo as Map<*, *>)
+        params["payment"] = jsonObjectPayment
+
+
+        var shippingaddress = HashMap<String, Any>()
+        shippingaddress["pincode"] = address.pincode
+        shippingaddress["houseNo"] = address.houseNo
+        shippingaddress["streetName"] = address.streetName
+        shippingaddress["city"] = address.city
+        val jsonObjectAddress = JSONObject(shippingaddress as Map<*, *>)
+        params["shippingAddress"] = jsonObjectAddress
 
         val jsonObject = JSONObject(params as Map<*, *>)
 
@@ -98,6 +113,17 @@ class OrderConfirmationActivity : AppCompatActivity() {
         var i = intent
         address = i.getSerializableExtra(Address.KEY) as Address
         paymentMode = i.getStringExtra(KEY_PAYMENT_METHOD).toString()
+
+        button_back_category.setOnClickListener {
+            startActivity(Intent(this, CategoryActivity::class.java))
+        }
+
+        button_logout.setOnClickListener {
+            sessionManager.logout()
+            Toast.makeText(this, "Successfully logout", Toast.LENGTH_SHORT).show()
+            dbHelper.clearCartContent()
+            startActivity(Intent(this, LoginActivity::class.java))
+        }
 
     }
 }

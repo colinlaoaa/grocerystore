@@ -7,15 +7,12 @@ data class OrderPost(
 )
 
 data class OrderInfo(
-    val __v: Int,
-    val _id: String,
     val date: String,
     val products: List<Product>,
     val userId: String
 )
 
 data class Product(
-    val _id: String,
     val image: String,
     val mrp: Int,
     val price: Int,

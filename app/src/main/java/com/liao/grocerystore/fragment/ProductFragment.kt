@@ -8,6 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.volley.Request
 import com.android.volley.Response
@@ -22,6 +24,7 @@ import com.liao.grocerystore.helper.DBHelper
 import com.liao.grocerystore.model.CartContent
 import com.liao.grocerystore.model.ProductContent
 import com.liao.grocerystore.model.ProductData
+import kotlinx.android.synthetic.main.fragment_category.*
 import kotlinx.android.synthetic.main.fragment_category.view.*
 import kotlinx.android.synthetic.main.new_row_fragment.view.*
 
@@ -77,6 +80,14 @@ class ProductFragment : Fragment(), AdapterRecyclerFragment.OnAdapterInteraction
         adapterRecyclerFragment.setAdapterListener(this)
 
         view.recycler_view_2.adapter = adapterRecyclerFragment
+
+        view.recycler_view_2.itemAnimator = DefaultItemAnimator()
+        view.recycler_view_2.addItemDecoration(
+            DividerItemDecoration(
+                activity,
+                DividerItemDecoration.VERTICAL
+            )
+        )
 
 
     }

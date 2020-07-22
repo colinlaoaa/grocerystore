@@ -9,6 +9,7 @@ import com.liao.grocerystore.R
 import com.liao.grocerystore.app.Config
 import com.liao.grocerystore.model.Category
 import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.activity_category.view.*
 import kotlinx.android.synthetic.main.new_row.view.*
 
 
@@ -58,7 +59,6 @@ class AdapterRecyclerCategory(var mContext: Context, var mList: List<Category>) 
                 .error(R.drawable.noimage)
                 .into(itemView.image_view_2)
 
-            itemView.progress_bar.visibility = View.GONE
             listener?.onItemClicked(itemView,category)
 
 

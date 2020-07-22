@@ -1,14 +1,12 @@
-package com.liao.myapplication.model
+package com.liao.grocerystore.model
 
 data class RegisterResponse(
-    val data: Data,
+    val data: UserInfo,
     val error: Boolean,
     val message: String
 )
 
-data class Data(
-    val __v: Int,
-    val _id: String,
+data class UserInfo(
     val createdAt: String,
     val email: String,
     val firstName: String,

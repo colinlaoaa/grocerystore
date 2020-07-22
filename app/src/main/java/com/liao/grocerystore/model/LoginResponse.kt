@@ -1,4 +1,4 @@
-package com.liao.myapplication.model
+package com.liao.grocerystore.model
 
 data class LoginResponse(
     val token: String,
@@ -6,7 +6,6 @@ data class LoginResponse(
 )
 
 data class User(
-    val __v: Int,
     val _id: String,
     val createdAt: String,
     val email: String,

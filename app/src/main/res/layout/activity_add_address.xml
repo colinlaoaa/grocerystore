@@ -2,48 +2,196 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@drawable/bg">
+    android:background="@mipmap/bg"
+    android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/edit_text_pincode"
-        style="@style/edit_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        android:hint="pincode" />
 
-    <EditText
-        android:id="@+id/edit_text_houseNo"
-        style="@style/edit_text"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        android:hint="houseNo" />
+        android:layout_height="60dp"
+        android:layout_marginRight="20dp"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:gravity="center_vertical"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="10dp"
+        android:orientation="horizontal"
+        android:weightSum="20">
 
-    <EditText
-        android:id="@+id/edit_text_streetName"
-        style="@style/edit_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        android:hint="streetName" />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="6"
+            android:text="Type"
+            android:textColor="@android:color/black"
+            android:textSize="17sp" />
 
-    <EditText
-        android:id="@+id/edit_text_city"
-        style="@style/edit_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        android:hint="city" />
 
-    <EditText
-        android:id="@+id/edit_text_type"
-        style="@style/edit_text"
+        <EditText
+            android:id="@+id/edit_text_type"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_margin="10dp"
+            android:layout_marginRight="5dp"
+            android:layout_weight="14"
+            android:background="@drawable/edittext_selector"
+            android:hint="TYPE"
+            android:minHeight="40dp"
+            android:paddingLeft="30dp"
+            android:singleLine="true"
+            android:textColorHint="#95A1AA" />
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        android:hint="type" />
+        android:layout_height="60dp"
+        android:layout_marginRight="20dp"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:gravity="center_vertical"
+        android:layout_marginLeft="10dp"
+        android:orientation="horizontal"
+        android:weightSum="20">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="6"
+            android:text="StreetName"
+            android:textColor="@android:color/black"
+            android:textSize="17sp" />
+
+
+        <EditText
+            android:id="@+id/edit_text_streetName"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_margin="10dp"
+            android:layout_marginRight="5dp"
+            android:layout_weight="14"
+            android:background="@drawable/edittext_selector"
+            android:hint="StreetName"
+            android:minHeight="40dp"
+            android:paddingLeft="30dp"
+            android:singleLine="true"
+            android:textColorHint="#95A1AA" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginRight="20dp"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:gravity="center_vertical"
+        android:layout_marginLeft="10dp"
+        android:orientation="horizontal"
+        android:weightSum="20">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="6"
+            android:text="City"
+            android:textColor="@android:color/black"
+            android:textSize="17sp" />
+
+
+        <EditText
+            android:id="@+id/edit_text_city"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_margin="10dp"
+            android:layout_marginRight="5dp"
+            android:layout_weight="14"
+            android:background="@drawable/edittext_selector"
+            android:hint="City"
+            android:minHeight="40dp"
+            android:paddingLeft="30dp"
+            android:singleLine="true"
+            android:textColorHint="#95A1AA" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginRight="20dp"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:gravity="center_vertical"
+        android:layout_marginLeft="10dp"
+        android:orientation="horizontal"
+        android:weightSum="20">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="6"
+            android:text="HouseNo"
+            android:textColor="@android:color/black"
+            android:textSize="17sp" />
+
+
+        <EditText
+            android:id="@+id/edit_text_houseNo"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_margin="10dp"
+            android:layout_marginRight="5dp"
+            android:layout_weight="14"
+            android:background="@drawable/edittext_selector"
+            android:hint="HouseNo"
+            android:minHeight="40dp"
+            android:paddingLeft="30dp"
+            android:singleLine="true"
+            android:textColorHint="#95A1AA" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginRight="20dp"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:gravity="center_vertical"
+        android:layout_marginLeft="10dp"
+        android:orientation="horizontal"
+        android:weightSum="20">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="6"
+            android:text="PINcode"
+            android:textColor="@android:color/black"
+            android:textSize="17sp" />
+
+
+        <EditText
+            android:id="@+id/edit_text_pincode"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_margin="10dp"
+            android:layout_marginRight="5dp"
+            android:layout_weight="14"
+            android:background="@drawable/edittext_selector"
+            android:hint="Pincode"
+            android:minHeight="40dp"
+            android:paddingLeft="30dp"
+            android:singleLine="true"
+            android:textColorHint="#95A1AA" />
+    </LinearLayout>
+
+
+
+
+
+
+
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -56,8 +204,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="Save Address"
-            android:background="@android:color/white"/>
+            android:layout_margin="15dp"
+            android:background="@drawable/button_selector"
+            android:text="Save Address" />
 
     </LinearLayout>
 
