@@ -20,11 +20,15 @@ class AdapterRecyclerCart(var mContext: Context, var mList: List<CartContent>) :
     var listener: OnAdapterInteraction? = null
 
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         var view = LayoutInflater.from(mContext).inflate(R.layout.new_row_cart, parent, false)
         var viewHolder = MyViewHolder(view)
         return viewHolder
+    }
+
+    fun refreshList(list:List<CartContent>){
+        mList = list
+        notifyDataSetChanged()
     }
 
     override fun getItemCount(): Int {
@@ -37,8 +41,7 @@ class AdapterRecyclerCart(var mContext: Context, var mList: List<CartContent>) :
     }
 
     interface OnAdapterInteraction {
-
-        fun onItemClickedRemove(cartContent: CartContent)
+        fun onItemClickedRemove(cartContent: CartContent, itemView: View, position: Int)
         fun onAddButtonClicked(itemView: View, cartContent: CartContent)
         fun onMinusButtonClicked(itemView: View, cartContent: CartContent)
     }
@@ -46,7 +49,6 @@ class AdapterRecyclerCart(var mContext: Context, var mList: List<CartContent>) :
     fun setAdapterListener(onAdapterInteraction: OnAdapterInteraction) {
         listener = onAdapterInteraction
     }
-
 
 
     inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -65,32 +67,11 @@ class AdapterRecyclerCart(var mContext: Context, var mList: List<CartContent>) :
                 .error(R.drawable.noimage)
                 .into(itemView.image_view_1)
 
+            listener?.onItemClickedRemove(cartContent, itemView, position)
 
-            itemView.button_remove.setOnClickListener {
-                mList -= mList[position]
-                listener?.onItemClickedRemove(cartContent)
-                notifyItemRemoved(position)
-                notifyItemChanged(position, mList.size)
+            listener?.onAddButtonClicked(itemView, cartContent)
 
-            }
-
-
-            itemView.button_add.setOnClickListener {
-                listener?.onAddButtonClicked(itemView, cartContent)
-            }
-
-            itemView.button_minus.setOnClickListener {
-
-                if (itemView.text_view_4.text == "1") {
-//                    mList -= mList[position]
-//                    listener?.onItemClickedRemove(cartContent)
-//                    notifyItemRemoved(position)
-//                    notifyItemChanged(position, mList.size)
-                } else {
-                    listener?.onMinusButtonClicked(itemView, cartContent)
-
-                }
-            }
+            listener?.onMinusButtonClicked(itemView, cartContent)
 
 
         }

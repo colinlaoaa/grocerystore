@@ -10,3 +10,4 @@ fun AppCompatActivity.toolbar(title: String){
     this.setSupportActionBar(toolbar)
     this.supportActionBar?.setDisplayHomeAsUpEnabled(true)
 }
+

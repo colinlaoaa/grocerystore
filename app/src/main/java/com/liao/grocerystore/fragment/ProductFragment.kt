@@ -41,8 +41,9 @@ private const val ARG_PARAM1 = "param1"
 class ProductFragment : Fragment(), AdapterRecyclerFragment.OnAdapterInteraction {
     lateinit var adapterRecyclerFragment: AdapterRecyclerFragment
     lateinit var dbHelper: DBHelper
+    var listener : FragmentListener? = null
 
-    var mList: ArrayList<ProductData> = ArrayList()
+    private var mList: ArrayList<ProductData> = ArrayList()
 
     // TODO: Rename and change types of parameters
     private var param1: String? = null
@@ -61,7 +62,7 @@ class ProductFragment : Fragment(), AdapterRecyclerFragment.OnAdapterInteraction
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
+
         var view = inflater.inflate(R.layout.fragment_category, container, false)
 
         dbHelper = DBHelper(context!!)
@@ -119,6 +120,14 @@ class ProductFragment : Fragment(), AdapterRecyclerFragment.OnAdapterInteraction
     override fun onResume() {
         super.onResume()
         getdata(param1.toString().toInt())
+    }
+
+
+    interface FragmentListener{
+        fun buttonHasClicked()
+    }
+    fun setFragmentListener(fragmentListener: FragmentListener){
+        listener = fragmentListener
     }
 
 
@@ -190,7 +199,7 @@ class ProductFragment : Fragment(), AdapterRecyclerFragment.OnAdapterInteraction
 
             }
 
-
+            listener?.buttonHasClicked()
         }
 
         itemView.button_2.setOnClickListener {
@@ -210,6 +219,7 @@ class ProductFragment : Fragment(), AdapterRecyclerFragment.OnAdapterInteraction
                 dbHelper.updateCartContent(cartContent)
 
             }
+            listener?.buttonHasClicked()
         }
 
         itemView.button_3.setOnClickListener {
@@ -243,6 +253,7 @@ class ProductFragment : Fragment(), AdapterRecyclerFragment.OnAdapterInteraction
                     Toast.LENGTH_SHORT
                 ).show()
             }
+            listener?.buttonHasClicked()
 
         }
 

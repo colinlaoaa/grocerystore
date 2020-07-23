@@ -5,6 +5,8 @@
     android:background="@mipmap/bg"
     android:orientation="vertical">
 
+<include layout="@layout/app_bar"/>
+
     <Button
         android:id="@+id/button_add_address"
         android:layout_width="match_parent"

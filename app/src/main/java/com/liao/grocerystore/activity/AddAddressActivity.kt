@@ -2,6 +2,7 @@ package com.liao.grocerystore.activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.android.volley.Request
@@ -11,6 +12,7 @@ import com.android.volley.toolbox.Volley
 import com.google.gson.GsonBuilder
 import com.liao.grocerystore.R
 import com.liao.grocerystore.app.Endpoints
+import com.liao.grocerystore.helper.toolbar
 import com.liao.grocerystore.model.AddressPost
 import com.liao.myapplication.helper.SessionManager
 import kotlinx.android.synthetic.main.activity_add_address.*
@@ -22,6 +24,8 @@ class AddAddressActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_address)
+
+        toolbar("Add Address")
 
 
         saveAddress()
@@ -80,7 +84,14 @@ class AddAddressActivity : AppCompatActivity() {
             requestQueue.add(request)
 
         }
+    }
 
-
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        super.onOptionsItemSelected(item)
+        when(item.itemId){
+            android.R.id.home ->
+                finish()
+        }
+        return true
     }
 }

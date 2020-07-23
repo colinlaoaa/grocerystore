@@ -30,7 +30,7 @@ class CartContentActivity : AppCompatActivity(), AdapterRecyclerCart.OnAdapterIn
         setContentView(R.layout.activity_cart_content)
 
 
-        toolbar("shoppingcart")
+        toolbar("Shopping Cart")
 
         init()
 
@@ -40,7 +40,7 @@ class CartContentActivity : AppCompatActivity(), AdapterRecyclerCart.OnAdapterIn
         }
 
         button_checkout.setOnClickListener {
-            startActivity(Intent(this,AddressActivity::class.java))
+            startActivity(Intent(this, AddressActivity::class.java))
         }
 
     }
@@ -87,23 +87,43 @@ class CartContentActivity : AppCompatActivity(), AdapterRecyclerCart.OnAdapterIn
         return true;
     }
 
-    override fun onItemClickedRemove(cartContent: CartContent) {
-        dbHelper.deleteCartContent(cartContent._id)
-        checkoutTotal()
+    override fun onItemClickedRemove(
+        cartContent: CartContent,
+        itemView: View,
+        position: Int
+    ) {
+        itemView.button_remove.setOnClickListener {
+            mList -= mList[position]
+            adapterRecyclerCart.refreshList(mList)
+            dbHelper.deleteCartContent(cartContent._id)
+            checkoutTotal()
+            adapterRecyclerCart.notifyItemRemoved(position)
+            adapterRecyclerCart.notifyItemChanged(position, mList.size)
+
+        }
     }
 
     override fun onAddButtonClicked(itemView: View, cartContent: CartContent) {
-        cartContent.quantity += 1
-        dbHelper.updateCartContent(cartContent)
-        itemView.text_view_4.text = cartContent.quantity.toString()
-        checkoutTotal()
+        itemView.button_add.setOnClickListener {
+            cartContent.quantity += 1
+            dbHelper.updateCartContent(cartContent)
+            itemView.text_view_4.text = cartContent.quantity.toString()
+            checkoutTotal()
+        }
     }
 
     override fun onMinusButtonClicked(itemView: View, cartContent: CartContent) {
-        cartContent.quantity -= 1
-        itemView.text_view_4.text =
-            "${cartContent.quantity}"
-        dbHelper.updateCartContent(cartContent)
-        checkoutTotal()
+        itemView.button_minus.setOnClickListener {
+
+            if (itemView.text_view_4.text == "1") {
+            } else {
+                cartContent.quantity -= 1
+                itemView.text_view_4.text =
+                    "${cartContent.quantity}"
+                dbHelper.updateCartContent(cartContent)
+                checkoutTotal()
+
+            }
+        }
     }
 }

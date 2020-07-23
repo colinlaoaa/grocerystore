@@ -7,8 +7,10 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.MenuItemCompat
 import com.liao.grocerystore.R
 import com.liao.grocerystore.app.Config
 import com.liao.grocerystore.helper.DBHelper
@@ -18,6 +20,7 @@ import com.liao.grocerystore.model.ProductData
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_product_detail.*
 import kotlinx.android.synthetic.main.app_bar.*
+import kotlinx.android.synthetic.main.menu_cart_layout.view.*
 import kotlinx.android.synthetic.main.new_row_fragment.view.*
 
 class ProductDetailActivity : AppCompatActivity() {
@@ -25,6 +28,7 @@ class ProductDetailActivity : AppCompatActivity() {
     lateinit var dbHelper: DBHelper
     lateinit var cartContent: CartContent
     lateinit var productData: ProductData
+    var textViewCount: TextView? = null
     override fun onCreate(savedInstanceState: Bundle?) {
 
 
@@ -65,10 +69,10 @@ class ProductDetailActivity : AppCompatActivity() {
                 dbHelper.updateCartContent(cartContent)
 
             }
+            updateCartCount()
         }
 
         button_add.setOnClickListener {
-
             if (!dbHelper.addquantity(cartContent._id)) {
                 cartContent.quantity += 1
                 dbHelper.addCartContent(cartContent)
@@ -94,6 +98,7 @@ class ProductDetailActivity : AppCompatActivity() {
                     Toast.LENGTH_SHORT
                 ).show()
             }
+            updateCartCount()
         }
     }
 
@@ -155,12 +160,15 @@ class ProductDetailActivity : AppCompatActivity() {
             Toast.makeText(applicationContext, "ADDED", Toast.LENGTH_SHORT).show()
             text_view_quantity.text = cartContent.quantity.toString()
 
+            updateCartCount()
+
         }
     }
 
 
     private fun buyButtonHandle() {
         button_buy.setOnClickListener {
+
 
             if (dbHelper.addquantity(cartContent._id)) {
                 cartContent.quantity += 1
@@ -174,16 +182,41 @@ class ProductDetailActivity : AppCompatActivity() {
 
             startActivity(Intent(this, CartContentActivity::class.java))
 
+            updateCartCount()
         }
     }
 
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        val inflater: MenuInflater = menuInflater
-        inflater.inflate(R.menu.menu_bar, menu)
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_bar, menu)
 
+        var item = menu.findItem(R.id.cart_menu)
+        MenuItemCompat.setActionView(item, R.layout.menu_cart_layout)
+        var view = MenuItemCompat.getActionView(item)
+        textViewCount = view.text_view_cart_count
+        updateCartCount()
+        view.setOnClickListener {
+            startActivity(Intent(this, CartContentActivity::class.java))
+        }
         return true
     }
+
+    override fun onResume() {
+        super.onResume()
+        updateCartCount()
+        init()
+    }
+
+    private fun updateCartCount() {
+        var count = dbHelper.readCartContentQuantity()
+        if (count == 0)
+            textViewCount?.visibility = View.GONE
+        else {
+            textViewCount?.visibility = View.VISIBLE
+            textViewCount?.text = count.toString()
+        }
+    }
+
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         super.onOptionsItemSelected(item);
@@ -192,15 +225,9 @@ class ProductDetailActivity : AppCompatActivity() {
                 finish()
             }
 
-            R.id.cart_menu -> {
-                startActivity(Intent(this, CartContentActivity::class.java))
-            }
         }
         return true;
     }
 
-    override fun onResume() {
-        super.onResume()
-        init()
-    }
+
 }

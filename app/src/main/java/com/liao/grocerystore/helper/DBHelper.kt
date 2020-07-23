@@ -69,6 +69,24 @@ class DBHelper(var mContext: Context) : SQLiteOpenHelper(
         return 0
     }
 
+    fun readCartContentQuantity(): Int {
+        var db = writableDatabase
+        var sumQuantity: Int = 0
+        var columns = arrayOf(
+            COL_QUANTITY
+        )
+        var cursor = db.query(TABLE_NAME, columns, null, null, null, null, null)
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                var qty = cursor.getInt(cursor.getColumnIndex(COL_QUANTITY))
+                sumQuantity += qty
+
+            } while (cursor.moveToNext())
+        }
+        cursor.close()
+        return sumQuantity
+    }
+
 
     fun deleteCartContent(_id: String) {
         var db = writableDatabase
@@ -77,7 +95,7 @@ class DBHelper(var mContext: Context) : SQLiteOpenHelper(
         db.delete(TABLE_NAME, whereClause, whereArgs)
     }
 
-    fun clearCartContent(){
+    fun clearCartContent() {
         var db = writableDatabase
         db.delete(TABLE_NAME, null, null)
     }
@@ -101,9 +119,8 @@ class DBHelper(var mContext: Context) : SQLiteOpenHelper(
         var subtotal: Double = 0.0
         var saving: Double = 0.0
         var tax: Double = 0.0
-        var total:Double = 0.0
+        var total: Double = 0.0
         var db = writableDatabase
-        var cartContentList: ArrayList<CartContent> = ArrayList()
         var columns = arrayOf(
             COL_PRICE,
             COL_MRP,
@@ -115,10 +132,10 @@ class DBHelper(var mContext: Context) : SQLiteOpenHelper(
                 var quantity = cursor.getInt(cursor.getColumnIndex(COL_QUANTITY))
                 var price = cursor.getDouble(cursor.getColumnIndex(COL_PRICE))
                 var mrp = cursor.getDouble(cursor.getColumnIndex(COL_MRP))
-                subtotal += quantity*price
-                saving+= quantity*(mrp - price)
-                tax += quantity*price*0.02
-                total += quantity*price*1.02
+                subtotal += quantity * price
+                saving += quantity * (mrp - price)
+                tax += quantity * price * 0.02
+                total += quantity * price * 1.02
             } while (cursor.moveToNext())
             cursor.close()
 

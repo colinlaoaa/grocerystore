@@ -19,12 +19,13 @@ data class AddressGet(
 )
 
 data class Address(
-    val city: String,
-    val houseNo: String,
-    val pincode: Int,
-    val streetName: String,
-    val type: String,
-    val userId: String
+    var _id: String? = null,
+    var city: String,
+    var houseNo: String,
+    var pincode: Int,
+    var streetName: String,
+    var type: String,
+    var userId: String
 ):Serializable{
     companion object{
         const val KEY = "address"

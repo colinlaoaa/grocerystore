@@ -3,12 +3,13 @@ package com.liao.grocerystore.activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
-import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
+import androidx.core.view.MenuItemCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.GridLayoutManager
 import com.android.volley.Request
@@ -20,6 +21,7 @@ import com.google.gson.GsonBuilder
 import com.liao.grocerystore.R
 import com.liao.grocerystore.adapters.AdapterRecyclerCategory
 import com.liao.grocerystore.app.Endpoints
+import com.liao.grocerystore.helper.DBHelper
 import com.liao.grocerystore.helper.toolbar
 import com.liao.grocerystore.model.Category
 import com.liao.grocerystore.model.CategoryResponse
@@ -27,24 +29,27 @@ import com.liao.myapplication.helper.SessionManager
 import kotlinx.android.synthetic.main.activity_category.*
 import kotlinx.android.synthetic.main.activity_navigation.*
 import kotlinx.android.synthetic.main.app_bar.*
+import kotlinx.android.synthetic.main.menu_cart_layout.view.*
 import kotlinx.android.synthetic.main.nav_header.view.*
-import kotlinx.android.synthetic.main.new_row.*
 import kotlinx.android.synthetic.main.new_row.view.*
 
 class CategoryActivity : AppCompatActivity(), AdapterRecyclerCategory.OnAdapterInteraction,
     NavigationView.OnNavigationItemSelectedListener {
 
 
-    var mList: ArrayList<Category> = ArrayList()
-    lateinit var adapterRecyclerCategory: AdapterRecyclerCategory
+    private var mList: ArrayList<Category> = ArrayList()
+    private lateinit var adapterRecyclerCategory: AdapterRecyclerCategory
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var navView: NavigationView
     private lateinit var sessionManager: SessionManager
+    var textViewCount: TextView? = null
+    lateinit var dbHelper: DBHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_navigation)
 
+        dbHelper = DBHelper(this)
         toolbar("Grocery")
         supportActionBar?.setDisplayHomeAsUpEnabled(false)
 
@@ -95,26 +100,35 @@ class CategoryActivity : AppCompatActivity(), AdapterRecyclerCategory.OnAdapterI
     }
 
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        val inflater: MenuInflater = menuInflater
-        inflater.inflate(R.menu.menu_bar, menu)
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_bar, menu)
 
+        var item = menu.findItem(R.id.cart_menu)
+        MenuItemCompat.setActionView(item, R.layout.menu_cart_layout)
+        var view = MenuItemCompat.getActionView(item)
+        textViewCount = view.text_view_cart_count
+        updateCartCount()
+        view.setOnClickListener {
+            startActivity(Intent(this, CartContentActivity::class.java))
+        }
         return true
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        super.onOptionsItemSelected(item);
-        when (item.itemId) {
-//            android.R.id.home -> {
-//                finish()
-//            }
-
-            R.id.cart_menu -> {
-                startActivity(Intent(this, CartContentActivity::class.java))
-            }
-        }
-        return true;
+    override fun onResume() {
+        super.onResume()
+        updateCartCount()
     }
+
+    private fun updateCartCount() {
+        var count = dbHelper.readCartContentQuantity()
+        if (count == 0)
+            textViewCount?.visibility = View.GONE
+        else {
+            textViewCount?.visibility = View.VISIBLE
+            textViewCount?.text = count.toString()
+        }
+    }
+
 
     override fun onItemClicked(itemView: View, category: Category) {
         itemView.view_1.setOnClickListener {

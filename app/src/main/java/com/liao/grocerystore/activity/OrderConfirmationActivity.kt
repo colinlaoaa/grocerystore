@@ -12,6 +12,7 @@ import com.google.gson.GsonBuilder
 import com.liao.grocerystore.R
 import com.liao.grocerystore.app.Endpoints
 import com.liao.grocerystore.helper.DBHelper
+import com.liao.grocerystore.helper.toolbar
 import com.liao.grocerystore.model.*
 import com.liao.myapplication.helper.SessionManager
 import kotlinx.android.synthetic.main.activity_order_confirmation.*
@@ -30,17 +31,17 @@ class OrderConfirmationActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_order_confirmation)
 
+        toolbar("Order Complete")
+        this.supportActionBar?.setDisplayHomeAsUpEnabled(false)
+
         init()
-        getData()
+
         sendOrder()
     }
 
+
+
     private fun sendOrder() {
-
-
-    }
-
-    private fun getData() {
         dbHelper = DBHelper(this)
         mList = dbHelper.readCartContent()
         sessionManager = SessionManager(this)
