@@ -15,8 +15,10 @@ import com.liao.grocerystore.helper.DBHelper
 import com.liao.grocerystore.helper.toolbar
 import com.liao.grocerystore.model.*
 import com.liao.myapplication.helper.SessionManager
+import kotlinx.android.synthetic.main.activity_cart_content.*
 import kotlinx.android.synthetic.main.activity_order_confirmation.*
 import org.json.JSONObject
+import java.text.DecimalFormat
 
 class OrderConfirmationActivity : AppCompatActivity() {
     private val KEY_PAYMENT_METHOD = "payment_method"
@@ -31,14 +33,13 @@ class OrderConfirmationActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_order_confirmation)
 
-        toolbar("Order Complete")
+        toolbar("com.liao.grocerystore.model.Order Complete")
         this.supportActionBar?.setDisplayHomeAsUpEnabled(false)
 
         init()
 
         sendOrder()
     }
-
 
 
     private fun sendOrder() {
@@ -50,10 +51,22 @@ class OrderConfirmationActivity : AppCompatActivity() {
         var product: ArrayList<Any> = ArrayList()
         var singleProduct = HashMap<String, Any>()
         params["userId"] = userId
+
+
+        //Object com.liao.grocerystore.model.User
+        var user = HashMap<String, Any?>()
+        user["email"] = sessionManager.getLoginEmail()
+        user["mobile"] = sessionManager.getMobile()
+        user["name"] = sessionManager.getUserName()
+        var jsonObjectUser = JSONObject(user as Map<*,*>)
+        params["user"] = jsonObjectUser
+
+
+        //List of Object com.liao.grocerystore.model.Product
         for (item in mList) {
             singleProduct["image"] = item.image
-            singleProduct["mrp"] = item.mrp
-            singleProduct["price"] = item.price
+            singleProduct["mrp"] = item.mrp.toInt()
+            singleProduct["price"] = item.price.toInt()
             singleProduct["quantity"] = item.quantity
             singleProduct["productName"] = item.productName
             val jsonObjectProduct = JSONObject(singleProduct as Map<*, *>)
@@ -61,12 +74,13 @@ class OrderConfirmationActivity : AppCompatActivity() {
         }
         params["products"] = product
 
+        //Object PaymentMethod
         var paymentMo = HashMap<String, String>()
         paymentMo["paymentMode"] = paymentMode
         var jsonObjectPayment = JSONObject(paymentMo as Map<*, *>)
         params["payment"] = jsonObjectPayment
 
-
+        //Object com.liao.grocerystore.model.ShippingAddress
         var shippingaddress = HashMap<String, Any>()
         shippingaddress["pincode"] = address.pincode
         shippingaddress["houseNo"] = address.houseNo
@@ -75,6 +89,21 @@ class OrderConfirmationActivity : AppCompatActivity() {
         val jsonObjectAddress = JSONObject(shippingaddress as Map<*, *>)
         params["shippingAddress"] = jsonObjectAddress
 
+
+        //Object com.liao.grocerystore.model.OrderSummary
+        var orderSummary = HashMap<String, Any>()
+        var res = dbHelper.checkoutTotal()
+        val df = DecimalFormat("#.00")
+        orderSummary["totalAmount"] = df.format(res[3]+res[2]).toDouble()
+        orderSummary["ourPrice"] = df.format(res[0]+res[2]+res[4]).toDouble()
+        orderSummary["orderAmount"] = df.format(res[0]+res[4]+res[2]).toDouble()
+        orderSummary["discount"] = df.format(res[1]).toDouble()
+        orderSummary["deliveryCharges"] = df.format(res[4]).toDouble()
+        val jsonObjectOrderSummary = JSONObject(orderSummary as Map<*,*>)
+        params["orderSummary"] = jsonObjectOrderSummary
+
+
+        //Entire Object
         val jsonObject = JSONObject(params as Map<*, *>)
 
         var requestQueue = Volley.newRequestQueue(this)
@@ -91,6 +120,7 @@ class OrderConfirmationActivity : AppCompatActivity() {
                         "error occur",
                         Toast.LENGTH_SHORT
                     ).show()
+
                 } else {
                     Toast.makeText(
                         this,
@@ -119,12 +149,6 @@ class OrderConfirmationActivity : AppCompatActivity() {
             startActivity(Intent(this, CategoryActivity::class.java))
         }
 
-        button_logout.setOnClickListener {
-            sessionManager.logout()
-            Toast.makeText(this, "Successfully logout", Toast.LENGTH_SHORT).show()
-            dbHelper.clearCartContent()
-            startActivity(Intent(this, LoginActivity::class.java))
-        }
 
     }
 }

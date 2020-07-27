@@ -179,6 +179,7 @@
             android:layout_weight="14"
             android:background="@drawable/edittext_selector"
             android:hint="Pincode"
+            android:digits="0123456789"
             android:minHeight="40dp"
             android:paddingLeft="30dp"
             android:singleLine="true"

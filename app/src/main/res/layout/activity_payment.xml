@@ -57,7 +57,7 @@
 <!--        android:layout_gravity="bottom"-->
 <!--        android:layout_margin="15dp"-->
 <!--        android:background="@drawable/button_selector"-->
-<!--        android:text="Payment"-->
+<!--        android:text="com.liao.grocerystore.model.Payment"-->
 <!--         />-->
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -18,7 +18,7 @@ class PaymentActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_payment)
 
-        toolbar("Payment")
+        toolbar("com.liao.grocerystore.model.Payment")
 
 
         init()

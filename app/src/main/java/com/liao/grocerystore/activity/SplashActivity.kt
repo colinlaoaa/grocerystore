@@ -9,7 +9,7 @@ import com.liao.myapplication.helper.SessionManager
 
 class SplashActivity : AppCompatActivity() {
 
-    private val delayedTime: Long = 3000
+    private val delayedTime: Long = 2200
     lateinit var sessionManager: SessionManager
 
 

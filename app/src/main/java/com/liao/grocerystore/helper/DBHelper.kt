@@ -120,6 +120,7 @@ class DBHelper(var mContext: Context) : SQLiteOpenHelper(
         var saving: Double = 0.0
         var tax: Double = 0.0
         var total: Double = 0.0
+        var delivery: Double = 0.0
         var db = writableDatabase
         var columns = arrayOf(
             COL_PRICE,
@@ -140,11 +141,19 @@ class DBHelper(var mContext: Context) : SQLiteOpenHelper(
             cursor.close()
 
         }
+
+        delivery = if (subtotal >= 150) {
+            0.0
+        } else {
+            20.0
+        }
+        total += delivery
         var arrayList = ArrayList<Double>()
         arrayList.add(subtotal)
         arrayList.add(saving)
         arrayList.add(tax)
         arrayList.add(total)
+        arrayList.add(delivery)
         return arrayList
     }
 

@@ -40,7 +40,7 @@ class LoginActivity : AppCompatActivity() {
         }
 
         check_box_remember.setOnClickListener {
-            if (check_box_remember.isChecked){
+            if (check_box_remember.isChecked) {
                 edit_text_1.setText(sessionManager.getLoginEmail())
             }
         }
@@ -67,7 +67,13 @@ class LoginActivity : AppCompatActivity() {
                 var login = gson.fromJson(it.toString(), LoginFailResponse::class.java)
                 var loginsuccess = gson.fromJson(it.toString(), LoginResponse::class.java)
                 if (!login.error) {
-                    sessionManager.login(email, loginsuccess.token,loginsuccess.user._id)
+                    sessionManager.login(
+                        email,
+                        loginsuccess.token,
+                        loginsuccess.user._id,
+                        loginsuccess.user.firstName,
+                        loginsuccess.user.mobile
+                    )
                     startActivity(Intent(this, CategoryActivity::class.java))
 
 
@@ -84,7 +90,6 @@ class LoginActivity : AppCompatActivity() {
 
 
     }
-
 
 
     private fun init() {

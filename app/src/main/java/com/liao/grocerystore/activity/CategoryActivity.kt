@@ -6,6 +6,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
@@ -26,6 +27,8 @@ import com.liao.grocerystore.helper.toolbar
 import com.liao.grocerystore.model.Category
 import com.liao.grocerystore.model.CategoryResponse
 import com.liao.myapplication.helper.SessionManager
+import com.synnapps.carouselview.CarouselView
+import com.synnapps.carouselview.ImageListener
 import kotlinx.android.synthetic.main.activity_category.*
 import kotlinx.android.synthetic.main.activity_navigation.*
 import kotlinx.android.synthetic.main.app_bar.*
@@ -33,8 +36,16 @@ import kotlinx.android.synthetic.main.menu_cart_layout.view.*
 import kotlinx.android.synthetic.main.nav_header.view.*
 import kotlinx.android.synthetic.main.new_row.view.*
 
+
 class CategoryActivity : AppCompatActivity(), AdapterRecyclerCategory.OnAdapterInteraction,
     NavigationView.OnNavigationItemSelectedListener {
+
+    private lateinit var carouselView: CarouselView
+    var sampleImages = intArrayOf(
+        R.drawable.pic6,
+        R.drawable.pic5,
+        R.drawable.pic4
+    )
 
 
     private var mList: ArrayList<Category> = ArrayList()
@@ -53,20 +64,20 @@ class CategoryActivity : AppCompatActivity(), AdapterRecyclerCategory.OnAdapterI
         toolbar("Grocery")
         supportActionBar?.setDisplayHomeAsUpEnabled(false)
 
-        image_view_1.setImageResource(R.drawable.pic1)
 
-        drawerLayout = drawer_layout
-        navView = nav_view
-        var headView = navView.getHeaderView(0)
-        sessionManager = SessionManager(this)
-        if (sessionManager.getUserName() == null || sessionManager.getUserName() == "") {
-            headView.text_view_user_name.text = sessionManager.getLoginEmail()
-        } else {
-            headView.text_view_user_name.text =sessionManager.getUserName()
+        carouselView = findViewById(R.id.carouselView)
+        carouselView.pageCount = sampleImages.size
+
+        carouselView.setImageListener { position, imageView ->
+            imageView.setImageResource(
+                sampleImages[position]
+            )
         }
-        val toogle = ActionBarDrawerToggle(this, drawerLayout, toolbar, 0, 0)
-        toogle.syncState()
-        navView.setNavigationItemSelectedListener(this)
+
+
+
+
+        setUpDrawer()
 
 
         getdata()
@@ -79,6 +90,22 @@ class CategoryActivity : AppCompatActivity(), AdapterRecyclerCategory.OnAdapterI
 
 
     }
+
+    private fun setUpDrawer() {
+        drawerLayout = drawer_layout
+        navView = nav_view
+        var headView = navView.getHeaderView(0)
+        sessionManager = SessionManager(this)
+        if (sessionManager.getUserName() == null || sessionManager.getUserName() == "") {
+            headView.text_view_user_name.text = sessionManager.getLoginEmail()
+        } else {
+            headView.text_view_user_name.text = sessionManager.getUserName()
+        }
+        val toogle = ActionBarDrawerToggle(this, drawerLayout, toolbar, 0, 0)
+        toogle.syncState()
+        navView.setNavigationItemSelectedListener(this)
+    }
+
 
     private fun getdata() {
         var requestQueue = Volley.newRequestQueue(this)
@@ -117,6 +144,7 @@ class CategoryActivity : AppCompatActivity(), AdapterRecyclerCategory.OnAdapterI
     override fun onResume() {
         super.onResume()
         updateCartCount()
+        setUpDrawer()
     }
 
     private fun updateCartCount() {
@@ -144,6 +172,18 @@ class CategoryActivity : AppCompatActivity(), AdapterRecyclerCategory.OnAdapterI
         } else {
             super.onBackPressed()
         }
+        when (item.itemId) {
+            R.id.item_order -> startActivity(Intent(this, OrderHistoryActivity::class.java))
+            R.id.item_logout -> {
+                sessionManager.logout()
+                Toast.makeText(this, "Successfully logout", Toast.LENGTH_SHORT).show()
+                dbHelper.clearCartContent()
+                startActivity(Intent(this, LoginActivity::class.java))
+            }
+            R.id.item_account -> startActivity(Intent(this, ProfileActivity::class.java))
+        }
         return true
     }
+
+
 }

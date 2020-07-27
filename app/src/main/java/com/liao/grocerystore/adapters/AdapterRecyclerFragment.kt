@@ -55,10 +55,8 @@ class AdapterRecyclerFragment(var mContext: Context, var mList: ArrayList<Produc
 
     inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        var dbHelper = DBHelper(mContext)
 
         fun bind(productData: ProductData) {
-            itemView.progress_bar.visibility = View.GONE
             itemView.text_view_1.text = productData.productName
             itemView.text_view_2.text = "unit" + productData.unit
             itemView.text_view_3.text = productData.mrp.toString()

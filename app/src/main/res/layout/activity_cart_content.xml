@@ -51,10 +51,24 @@
             android:layout_alignParentRight="true" />
 
         <TextView
-            android:id="@+id/text_view_saving"
+            android:id="@+id/text_view_delivery"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/text_view_tax"
+            android:text="Delivery Fee" />
+
+        <TextView
+            android:id="@+id/text_view_delivery_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/text_view_delivery"
+            android:layout_alignParentRight="true" />
+
+        <TextView
+            android:id="@+id/text_view_saving"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/text_view_delivery"
             android:text="Your Saving" />
 
         <TextView

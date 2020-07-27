@@ -27,11 +27,19 @@ class SessionManager(mContext: Context) {
     }
 
 
-    fun login(email: String, token: String, _id: String) {
+    fun login(email: String, token: String, _id: String, firstName: String , mobile:String) {
         editor.putString(KEY_LOG_EMAIL, email)
         editor.putString(KEY_TOKEN, token)
         editor.putBoolean(KEY_IS_LOGGED_IN, true)
         editor.putString(KEY_USER_ID, _id)
+        editor.putString(KEY_NAME, firstName)
+        editor.putString(KEY_MOBILE,mobile)
+        editor.commit()
+    }
+
+    fun updateUserInfo( firstName: String , mobile:String){
+        editor.putString(KEY_NAME, firstName)
+        editor.putString(KEY_MOBILE,mobile)
         editor.commit()
     }
 
@@ -55,6 +63,10 @@ class SessionManager(mContext: Context) {
 
     fun getLoginEmail(): String?{
         return sharedPreferences.getString(KEY_LOG_EMAIL,"")
+    }
+
+    fun getMobile(): String?{
+        return sharedPreferences.getString(KEY_MOBILE,"")
     }
 
 

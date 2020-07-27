@@ -14,8 +14,8 @@ import com.liao.grocerystore.helper.DBHelper
 import com.liao.grocerystore.helper.toolbar
 import com.liao.grocerystore.model.CartContent
 import kotlinx.android.synthetic.main.activity_cart_content.*
-import kotlinx.android.synthetic.main.app_bar.*
-import kotlinx.android.synthetic.main.fragment_category.view.*
+import kotlinx.android.synthetic.main.activity_cart_content.view_all
+import kotlinx.android.synthetic.main.empty_cart.*
 import kotlinx.android.synthetic.main.new_row_cart.view.*
 import java.text.DecimalFormat
 
@@ -39,8 +39,21 @@ class CartContentActivity : AppCompatActivity(), AdapterRecyclerCart.OnAdapterIn
             checkoutTotal()
         }
 
+
         button_checkout.setOnClickListener {
             startActivity(Intent(this, AddressActivity::class.java))
+        }
+
+        if (mList.isEmpty()) {
+            setContentView(R.layout.empty_cart)
+            button_back_category.setOnClickListener {
+                startActivity(
+                    Intent(
+                        this,
+                        CategoryActivity::class.java
+                    )
+                )
+            }
         }
 
     }
@@ -52,6 +65,7 @@ class CartContentActivity : AppCompatActivity(), AdapterRecyclerCart.OnAdapterIn
         text_view_tax_number.text = df.format(res[2]).toString()
         text_view_delivery_saving.text = df.format(res[1]).toString()
         text_view_total_number.text = df.format(res[3]).toString()
+        text_view_delivery_number.text = df.format(res[4]).toString()
     }
 
 
@@ -80,9 +94,6 @@ class CartContentActivity : AppCompatActivity(), AdapterRecyclerCart.OnAdapterIn
                 finish()
             }
 
-            R.id.cart_menu -> {
-                startActivity(Intent(this, CartContentActivity::class.java))
-            }
         }
         return true;
     }
@@ -99,7 +110,17 @@ class CartContentActivity : AppCompatActivity(), AdapterRecyclerCart.OnAdapterIn
             checkoutTotal()
             adapterRecyclerCart.notifyItemRemoved(position)
             adapterRecyclerCart.notifyItemChanged(position, mList.size)
-
+            if (mList.isEmpty()) {
+                setContentView(R.layout.empty_cart)
+                button_back_category.setOnClickListener {
+                    startActivity(
+                        Intent(
+                            this,
+                            CategoryActivity::class.java
+                        )
+                    )
+                }
+            }
         }
     }
 

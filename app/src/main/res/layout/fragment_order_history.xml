@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@mipmap/bg">
+
+    <TextView
+        android:id="@+id/text_view_subtotal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Subtotal" />
+
+    <TextView
+        android:id="@+id/text_view_subtotal_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/text_view_subtotal"
+        android:layout_alignParentRight="true" />
+
+
+
+    <TextView
+        android:id="@+id/text_view_delivery"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text_view_subtotal"
+        android:text="Delivery Fee" />
+
+    <TextView
+        android:id="@+id/text_view_delivery_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/text_view_delivery"
+        android:layout_alignParentRight="true" />
+
+    <TextView
+        android:id="@+id/text_view_saving"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text_view_delivery"
+        android:text="Your Saving" />
+
+    <TextView
+        android:id="@+id/text_view_saving_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/text_view_saving"
+        android:layout_alignParentRight="true" />
+
+    <TextView
+        android:id="@+id/text_view_total"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text_view_saving"
+        android:text="Total Payment" />
+
+    <TextView
+        android:id="@+id/text_view_total_number2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/text_view_total"
+        android:layout_alignParentRight="true" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_marginTop="10dp"
+        android:id="@+id/recycler_view_order_detail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text_view_total"/>
+</RelativeLayout>
