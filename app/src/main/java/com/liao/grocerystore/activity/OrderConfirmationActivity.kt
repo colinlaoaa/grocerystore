@@ -22,18 +22,22 @@ import java.text.DecimalFormat
 
 class OrderConfirmationActivity : AppCompatActivity() {
     private val KEY_PAYMENT_METHOD = "payment_method"
+    private val NAME = "NAME"
+    private val MOBILE = "MOBILE"
     lateinit var dbHelper: DBHelper
     lateinit var address: Address
     lateinit var paymentMode: String
     lateinit var userId: String
     lateinit var sessionManager: SessionManager
+    lateinit var name:String
+    lateinit var mobile:String
     var mList: ArrayList<CartContent> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_order_confirmation)
 
-        toolbar("com.liao.grocerystore.model.Order Complete")
+        toolbar("Order Complete")
         this.supportActionBar?.setDisplayHomeAsUpEnabled(false)
 
         init()
@@ -56,8 +60,8 @@ class OrderConfirmationActivity : AppCompatActivity() {
         //Object com.liao.grocerystore.model.User
         var user = HashMap<String, Any?>()
         user["email"] = sessionManager.getLoginEmail()
-        user["mobile"] = sessionManager.getMobile()
-        user["name"] = sessionManager.getUserName()
+        user["mobile"] = mobile
+        user["name"] = name
         var jsonObjectUser = JSONObject(user as Map<*,*>)
         params["user"] = jsonObjectUser
 
@@ -144,6 +148,8 @@ class OrderConfirmationActivity : AppCompatActivity() {
         var i = intent
         address = i.getSerializableExtra(Address.KEY) as Address
         paymentMode = i.getStringExtra(KEY_PAYMENT_METHOD).toString()
+        mobile = i.getStringExtra(MOBILE).toString()
+        name = i.getStringExtra(NAME).toString()
 
         button_back_category.setOnClickListener {
             startActivity(Intent(this, CategoryActivity::class.java))
